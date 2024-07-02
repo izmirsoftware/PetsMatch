@@ -17,14 +17,15 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val adapter = AdapterPetCard()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        observeLiveData(viewLifecycleOwner)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(
-            inflater,
-            container,
-            false
-        )
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         viewModel.createPetCardModels()
@@ -34,11 +35,8 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(
-            view,
-            savedInstanceState
-        )
-        observeLiveData(viewLifecycleOwner)
+        super.onViewCreated(view, savedInstanceState)
+
     }
 
     private fun observeLiveData(owner: LifecycleOwner) {

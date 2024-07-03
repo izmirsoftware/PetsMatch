@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
-import com.izmirsoftware.petsmatch.databinding.FragmentCreatePetBinding
-import com.izmirsoftware.petsmatch.viewmodel.home.CreatePetViewModel
+import com.izmirsoftware.petsmatch.databinding.FragmentCreatePetPage1Binding
+import com.izmirsoftware.petsmatch.viewmodel.home.CreatePetPage1ViewModel
 
-class CreatePetFragment : Fragment() {
-    private val viewModel: CreatePetViewModel by viewModels()
-    private var _binding: FragmentCreatePetBinding? = null
+class CreatePetPage1Fragment : Fragment() {
+    private val viewModel: CreatePetPage1ViewModel by viewModels()
+    private var _binding: FragmentCreatePetPage1Binding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +23,7 @@ class CreatePetFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCreatePetBinding.inflate(inflater, container, false)
+        _binding = FragmentCreatePetPage1Binding.inflate(inflater, container, false)
         val root: View = binding.root
 
         return root

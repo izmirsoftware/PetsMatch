@@ -1,5 +1,6 @@
 package com.izmirsoftware.petsmatch.view.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import com.izmirsoftware.petsmatch.adapter.AdapterPetCard
 import com.izmirsoftware.petsmatch.databinding.FragmentHomeBinding
+import com.izmirsoftware.petsmatch.view.LoginActivity
 import com.izmirsoftware.petsmatch.viewmodel.home.HomeViewModel
 
 class HomeFragment : Fragment() {
@@ -39,6 +41,7 @@ class HomeFragment : Fragment() {
             savedInstanceState
         )
         observeLiveData(viewLifecycleOwner)
+
     }
 
     private fun observeLiveData(owner: LifecycleOwner) {

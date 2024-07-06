@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.izmirsoftware.petsmatch.model.UserModel
 
 //String öğelerin sonuna fonksiyon ile snackbar çıkarma özelliği sağlar
 fun String.snackbar(view: View, duration: Int = Toast.LENGTH_SHORT): Snackbar {
@@ -28,7 +29,7 @@ fun String.toast(view: View, duration: Int = Toast.LENGTH_SHORT): Toast {
 }
 
 //Modellerdeki değişkenler ile veritabanı değişkenleri arasında uyumsuzluk olursa uygulamanın çökmemesi için eklendi
-/*
+
 fun QueryDocumentSnapshot.toUserModel(): UserModel? = try {
     toObject(UserModel::class.java)
 } catch (e: Exception) {
@@ -52,7 +53,7 @@ fun DocumentSnapshot.toUserModel(): UserModel? = try {
     }
     UserModel()
 }
-
+/*
 fun QueryDocumentSnapshot.toVilla(): Villa = try {
     toObject(Villa::class.java)
 } catch (e: Exception) {

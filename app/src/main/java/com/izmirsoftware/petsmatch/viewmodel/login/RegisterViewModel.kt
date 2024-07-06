@@ -7,9 +7,16 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.izmirsoftware.petsmatch.util.Resource
 import com.izmirsoftware.petsmatch.util.Status
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RegisterViewModel : ViewModel() {
+@HiltViewModel
+class RegisterViewModel
+@Inject
+constructor(
+
+) : ViewModel() {
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private val _authState = MutableLiveData<Resource<Boolean>>()
@@ -18,13 +25,15 @@ class RegisterViewModel : ViewModel() {
     fun signUp(email: String, password: String, confirmPassword: String) = viewModelScope.launch {
         if (password == confirmPassword) {
             _authState.value = Resource(Status.LOADING, null, null)
-            firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    sendEmailVerification()
-                } else {
-                    _authState.value = Resource(Status.ERROR, null, task.exception?.localizedMessage)
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        sendEmailVerification()
+                    } else {
+                        _authState.value =
+                            Resource(Status.ERROR, null, task.exception?.localizedMessage)
+                    }
                 }
-            }
         } else {
             _authState.value = Resource(Status.ERROR, null, "Passwords do not match")
         }

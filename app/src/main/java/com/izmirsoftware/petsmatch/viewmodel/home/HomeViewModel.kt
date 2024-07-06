@@ -10,8 +10,13 @@ import com.izmirsoftware.petsmatch.model.PetCardModel
 import com.izmirsoftware.petsmatch.model.PetPost
 import com.izmirsoftware.petsmatch.viewmodel.BaseViewModel
 import java.util.*
+import javax.inject.Inject
 
-class HomeViewModel : BaseViewModel() {
+class HomeViewModel
+@Inject
+constructor(
+
+): BaseViewModel() {
     val petCardModel: LiveData<List<PetCardModel>> = MutableLiveData()
 
     fun createPetCardModels() {

@@ -9,19 +9,100 @@
         android:id="@+id/navigation_home"
         android:name="com.izmirsoftware.petsmatch.view.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
-    <action
-        android:id="@+id/action_global_navigation_home"
-        app:destination="@id/navigation_home"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:exitAnim="@anim/nav_default_exit_anim"
-        app:popUpTo="@id/navigation_home"
-        app:popUpToInclusive="true"
-        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_entryForCreateFragment"
+            app:destination="@id/entryForCreateFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.izmirsoftware.petsmatch.view.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <action
+        android:id="@+id/action_global_navigation_home"
+        app:destination="@id/navigation_home"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim"
+        app:popUpTo="@id/navigation_home"
+        app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_global_navigation_profile"
+        app:destination="@id/navigation_profile"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim"
+        app:popUpTo="@id/navigation_profile"
+        app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/entryForCreateFragment"
+        android:name="com.izmirsoftware.petsmatch.view.home.EntryForCreateFragment"
+        android:label="fragment_entry_for_create"
+        tools:layout="@layout/fragment_entry_for_create">
+        <action
+            android:id="@+id/action_entryForCreateFragment_to_createPostFragment"
+            app:destination="@id/createPostFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_entryForCreateFragment_to_createPetPage1Fragment"
+            app:destination="@id/createPetPage1Fragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/createPostFragment"
+        android:name="com.izmirsoftware.petsmatch.view.home.CreatePostFragment"
+        android:label="fragment_create_post"
+        tools:layout="@layout/fragment_create_post" />
+    <fragment
+        android:id="@+id/createPetPage1Fragment"
+        android:name="com.izmirsoftware.petsmatch.view.home.CreatePetPage1Fragment"
+        android:label="CreatePetPage1Fragment"
+        tools:layout="@layout/fragment_create_pet_page1">
+        <action
+            android:id="@+id/action_createPetPage1Fragment_to_createPetPage2Fragment"
+            app:destination="@id/createPetPage2Fragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/createPetPage2Fragment"
+        android:name="com.izmirsoftware.petsmatch.view.home.CreatePetPage2Fragment"
+        android:label="CreatePetPage2Fragment"
+        tools:layout="@layout/fragment_create_pet_page2">
+        <action
+            android:id="@+id/action_createPetPage2Fragment_to_createPetPage3Fragment"
+            app:destination="@id/createPetPage3Fragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/createPetPage3Fragment"
+        android:name="com.izmirsoftware.petsmatch.view.home.CreatePetPage3Fragment"
+        android:label="fragment_create_pet_page3"
+        tools:layout="@layout/fragment_create_pet_page3">
+        <action
+            android:id="@+id/action_createPetPage3Fragment_to_entryForCreateFragment"
+            app:destination="@id/entryForCreateFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 </navigation>

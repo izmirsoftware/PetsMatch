@@ -15,7 +15,9 @@ import com.izmirsoftware.petsmatch.R
 import com.izmirsoftware.petsmatch.databinding.FragmentRegisterBinding
 import com.izmirsoftware.petsmatch.viewmodel.login.RegisterViewModel
 import com.izmirsoftware.petsmatch.util.Status
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
     private val viewModel: RegisterViewModel by viewModels()

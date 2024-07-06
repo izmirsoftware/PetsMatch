@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.Navigation
 import com.izmirsoftware.petsmatch.adapter.AdapterPetCard
 import com.izmirsoftware.petsmatch.databinding.FragmentHomeBinding
 import com.izmirsoftware.petsmatch.viewmodel.home.HomeViewModel
@@ -28,6 +29,8 @@ class HomeFragment : Fragment() {
         viewModel.createPetCardModels()
         binding.rvHome.adapter = adapter
 
+        setOnClickItems()
+
         return root
     }
 
@@ -39,6 +42,16 @@ class HomeFragment : Fragment() {
     private fun observeLiveData(owner: LifecycleOwner) {
         viewModel.petCardModel.observe(owner) {
             adapter.petCardList = it.toList()
+        }
+    }
+
+    private fun setOnClickItems() {
+        with(binding) {
+            fab.setOnClickListener {
+                val direction =
+                    HomeFragmentDirections.actionNavigationHomeToEntryForCreateFragment()
+                Navigation.findNavController(it).navigate(direction)
+            }
         }
     }
 

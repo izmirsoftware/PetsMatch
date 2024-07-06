@@ -2,8 +2,9 @@
 <resources>
     <string name="app_name">Pets Match</string>
     <string name="create_title">Pet Create</string>
-    <string name="create_subtitle_12">Page 1&#47;2</string>
-    <string name="create_subtitle_22">Page 2&#47;2</string>
+    <string name="create_subtitle_13">Page 1&#47;3</string>
+    <string name="create_subtitle_23">Page 2&#47;3</string>
+    <string name="create_subtitle_33">Page 3&#47;3</string>
     <string name="create_pet_genus">Pet genus</string>
     <string name="create_pet_breed">Pet breed</string>
     <string name="create_pet_gender">Pet gender</string>
@@ -11,5 +12,13 @@
     <string name="create_pet_age">Pet age</string>
     <string name="create_pet_color">Pet color</string>
     <string name="create_pet_during_estrus">During Estrus?</string>
+    <string name="create_pet_vaccinations">Are they fully vaccinated?</string>
+    <string name="create_pet_allergies">Include any allergies</string>
+    <string name="create_pet_personality">Personality definition</string>
+    <string name="create_pet_interests">Areas of interest</string>
     <string name="next_page">Next Page</string>
+    <string name="no_pets">You do not have a pet defined in your account. You can use the button below to add.</string>
+    <string name="title_my_pets">My Pets</string>
+    <string name="save">Save</string>
+    <string name="title_create_post">Create Pet Post</string>
 </resources>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="user"
+            type="com.izmirsoftware.petsmatch.model.UserModel" />
+        <variable
+            name="viewModel"
+            type="com.izmirsoftware.petsmatch.viewmodel.profile.EditProfileViewModel" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F3F4F6"
+        android:padding="16dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#FFFFFF"
+                android:elevation="4dp"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        downloadImage="@{user.profilePhoto}"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:src="@drawable/placeholder"
+                        android:scaleType="centerCrop"
+                        android:layout_marginEnd="16dp"
+                        android:onClick="@{() -> viewModel.showPopup()}" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@={user.username}"
+                            tools:text="Gaffar Yücel"
+                            android:hint="Username"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:inputType="textPersonName" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@={user.email}"
+                            tools:text="gaffaryucel@mail.com"
+                            android:hint="Email"
+                            android:textColor="#718096"
+                            android:inputType="textEmailAddress" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@={user.phone}"
+                            tools:text="+90 542 542 42 42"
+                            android:hint="Phone"
+                            android:textColor="#718096"
+                            android:inputType="phone" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hakkında"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={user.bio}"
+                        tools:text="I have been breeding animals for over 10 years. Specializing in exotic breeds, I ensure the health and happiness of each animal."
+                        android:hint="Bio"
+                        android:textColor="#4A5568"
+                        android:layout_marginTop="8dp"
+                        android:inputType="textMultiLine"
+                        android:lines="4"
+                        android:minLines="4"
+                        android:gravity="top" />
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Save Changes"
+                    android:onClick="@{() -> viewModel.saveChanges()}"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</layout>

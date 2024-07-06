@@ -1,14 +1,14 @@
 package com.izmirsoftware.petsmatch.viewmodel.home
 
-import com.izmirsoftware.petsmatch.viewmodel.BaseViewModel
+import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class CreatePetPage1ViewModel
+class CreatePostViewModel
 @Inject
 constructor(
 
-): BaseViewModel() {
+): ViewModel() {
     // TODO: Implement the ViewModel
 }

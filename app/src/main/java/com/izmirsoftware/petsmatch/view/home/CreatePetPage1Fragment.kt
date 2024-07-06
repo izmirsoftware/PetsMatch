@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import com.izmirsoftware.petsmatch.databinding.FragmentCreatePetPage1Binding
 import com.izmirsoftware.petsmatch.viewmodel.home.CreatePetPage1ViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CreatePetPage1Fragment : Fragment() {
     private val viewModel: CreatePetPage1ViewModel by viewModels()
     private var _binding: FragmentCreatePetPage1Binding? = null

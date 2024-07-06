@@ -10,17 +10,14 @@ import androidx.lifecycle.LifecycleOwner
 import com.izmirsoftware.petsmatch.adapter.AdapterPetCard
 import com.izmirsoftware.petsmatch.databinding.FragmentHomeBinding
 import com.izmirsoftware.petsmatch.viewmodel.home.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val adapter = AdapterPetCard()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        observeLiveData(viewLifecycleOwner)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -36,7 +33,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        observeLiveData(viewLifecycleOwner)
     }
 
     private fun observeLiveData(owner: LifecycleOwner) {

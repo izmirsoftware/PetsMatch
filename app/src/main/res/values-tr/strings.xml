@@ -2,8 +2,9 @@
 <resources>
     <string name="app_name">Evcil Hayvan Eşleştirme</string>
     <string name="create_title">Evcil Hayvan Oluştur</string>
-    <string name="create_subtitle_12">Sayfa 1&#47;2</string>
-    <string name="create_subtitle_22">Sayfa 2&#47;2</string>
+    <string name="create_subtitle_13">Sayfa 1&#47;3</string>
+    <string name="create_subtitle_23">Sayfa 2&#47;3</string>
+    <string name="create_subtitle_33">Sayfa 3&#47;3</string>
     <string name="create_pet_genus">Hayvanın türü</string>
     <string name="create_pet_breed">Hayvanın ırkı</string>
     <string name="create_pet_gender">Hayvanın cinsiyeti</string>
@@ -11,5 +12,13 @@
     <string name="create_pet_age">Hayvanın yaşı</string>
     <string name="create_pet_color">Hayvanın rengi</string>
     <string name="create_pet_during_estrus">Kızgılık döneminde mi?</string>
+    <string name="create_pet_vaccinations">Aşıları tam mi?</string>
+    <string name="create_pet_allergies">Varsa alerjilerini ekleyin.</string>
+    <string name="create_pet_personality">Kişilik tanımı</string>
+    <string name="create_pet_interests">İlgi alanları</string>
     <string name="next_page">Sonraki Sayfa</string>
+    <string name="no_pets">Hesabınızda tanımlı evcil hayvanınız yok. Eklemek için aşağıdaki butonu kullanabilirsiniz.</string>
+    <string name="title_my_pets">Evcil Hayvanlarım</string>
+    <string name="save">Kaydet</string>
+    <string name="title_create_post">Evcil Hayvan İlanı Oluştur</string>
 </resources>

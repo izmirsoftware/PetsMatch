@@ -10,4 +10,8 @@ open class BaseViewModel : ViewModel() {
         get() = this as MutableLiveData<T>
 
     val liveDataStatus: LiveData<Resource<Boolean>> = MutableLiveData()
+
+    fun myFun(){
+
+    }
 }

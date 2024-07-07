@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Evcil Hayvan Eşleştirme</string>
+    <string name="create_title">Evcil Hayvan Oluştur</string>
+    <string name="create_subtitle_12">Sayfa 1&#47;2</string>
+    <string name="create_subtitle_22">Sayfa 2&#47;2</string>
+    <string name="create_pet_genus">Hayvanın türü</string>
+    <string name="create_pet_breed">Hayvanın ırkı</string>
+    <string name="create_pet_gender">Hayvanın cinsiyeti</string>
+    <string name="create_pet_name">Hayvanın ismi</string>
+    <string name="create_pet_age">Hayvanın yaşı</string>
+    <string name="create_pet_color">Hayvanın rengi</string>
+    <string name="create_pet_during_estrus">Kızgılık döneminde mi?</string>
+    <string name="next_page">Sonraki Sayfa</string>
+</resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="choose_list">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="genus_list">
+        <item>Cat</item>
+        <item>Dog</item>
+    </string-array>
+
+    <string-array name="gender_list">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="cat_breed_list">
+        <item>Aegean</item>
+        <item>Turkish Ankara</item>
+        <item>Turkish Van</item>
+        <item>British Longhair</item>
+        <item>British Shorthair</item>
+        <item>Scottish Fold</item>
+    </string-array>
+
+    <string-array name="dog_breed_list">
+        <item>Afghan hound</item>
+        <item>Akbaş</item>
+        <item>Anadolu çoban köpeği</item>
+        <item>Belçika çoban köpeği</item>
+        <item>Kangal köpeği</item>
+        <item>Sibirya kurdu</item>
+    </string-array>
+</resources>

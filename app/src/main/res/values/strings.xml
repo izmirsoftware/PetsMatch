@@ -1,3 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PetsMatch</string>
+    <string name="app_name">Pets Match</string>
+    <string name="create_title">Pet Create</string>
+    <string name="create_subtitle_12">Page 1&#47;2</string>
+    <string name="create_subtitle_22">Page 2&#47;2</string>
+    <string name="create_pet_genus">Pet genus</string>
+    <string name="create_pet_breed">Pet breed</string>
+    <string name="create_pet_gender">Pet gender</string>
+    <string name="create_pet_name">Pet name</string>
+    <string name="create_pet_age">Pet age</string>
+    <string name="create_pet_color">Pet color</string>
+    <string name="create_pet_during_estrus">During Estrus?</string>
+    <string name="next_page">Next Page</string>
 </resources>

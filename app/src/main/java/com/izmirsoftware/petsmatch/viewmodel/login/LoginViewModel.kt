@@ -43,10 +43,13 @@ class LoginViewModel @Inject constructor(
 
     fun login(email: String, password: String) = viewModelScope.launch {
         _authState.value = Resource.loading(true)
+        println("login")
         firebaseRepo.login(email, password)
             .addOnCompleteListener { task ->
+                println("2")
                 _authState.value = Resource.loading(false)
                 if (task.isSuccessful) {
+                    println("3")
                     _authState.value = Resource.success(true)
                     updateUserToken(task.result?.user?.uid ?: "")
                 } else {
@@ -66,9 +69,6 @@ class LoginViewModel @Inject constructor(
                     _forgotPassword.value = Resource.error(task.exception?.localizedMessage ?: "Password reset failed", false)
                 }
             }
-    }
-    fun asdasd(){
-
     }
 
     fun sendVerificationEmail() = viewModelScope.launch {
@@ -108,7 +108,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun updateUserToken(currentUserId: String) {
+    private fun updateUserToken(currentUserId: String) = viewModelScope.launch{
         userToken.value?.data?.let { token ->
             val tokenMap = hashMapOf<String, Any?>(
                 "token" to token

@@ -9,23 +9,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
+import com.izmirsoftware.petsmatch.MainActivity
 import com.izmirsoftware.petsmatch.databinding.FragmentLoginBinding
-import com.izmirsoftware.petsmatch.viewmodel.login.LoginViewModel
 import com.izmirsoftware.petsmatch.util.Status
 import com.izmirsoftware.petsmatch.util.startLoadingProcess
+import com.izmirsoftware.petsmatch.viewmodel.BaseViewModel
+import com.izmirsoftware.petsmatch.viewmodel.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
 
-    private lateinit var viewModel: LoginViewModel
-
+    private val loginViewModel : LoginViewModel by viewModels()
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
@@ -37,6 +38,8 @@ class LoginFragment : Fragment() {
     private lateinit var forgotPasswordSuccessDialog: AlertDialog
     private lateinit var verificationEmailSentDialog: AlertDialog
     private lateinit var verificationEmailSentErrorDialog: AlertDialog
+    private lateinit var emailVerificationReminderDialog: AlertDialog
+
 
     val RC_SIGN_IN = 20
     private lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -47,7 +50,6 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         val view = binding.root
         return view
     }
@@ -64,9 +66,11 @@ class LoginFragment : Fragment() {
         forgotPasswordSuccessDialog = AlertDialog.Builder(requireContext()).create()
         verificationEmailSentDialog = AlertDialog.Builder(requireContext()).create()
         verificationEmailSentErrorDialog = AlertDialog.Builder(requireContext()).create()
+        emailVerificationReminderDialog = AlertDialog.Builder(requireContext()).create()
 
         setProgressBar(false)
         setupDialogs()
+
 /*
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.web_client_id))
@@ -82,12 +86,14 @@ class LoginFragment : Fragment() {
             btnLogin.setOnClickListener {
                 val email = etEmail.text.toString()
                 val password = etPassword.text.toString()
-
                 if (email.isNotEmpty() && password.length > 5) {
-                    viewModel?.login(email, password)
+                    println("1")
+                    loginViewModel.login(email,password)
                 } else if (email.isEmpty()) {
+                    println("e")
                     etEmail.error = "Please enter an email address"
                 } else {
+                    println("e")
                     etPassword.error = "Please enter a password (at least 6 characters)"
                 }
             }
@@ -98,7 +104,7 @@ class LoginFragment : Fragment() {
                 ) { _, _ ->
                     val email = etEmail.text.toString().trim()
                     if (email.isNotEmpty()) {
-                        viewModel?.asdasd()
+                        loginViewModel.forgotPassword(email)
                     } else {
                         etEmail.error = "Please enter an email address"
                     }
@@ -124,7 +130,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun verifyEmail() {
-        viewModel.getUser()?.let {
+        loginViewModel.getUser()?.let {
             if (it.isEmailVerified) {
                 gotoHome()
             } else {
@@ -134,15 +140,13 @@ class LoginFragment : Fragment() {
     }
 
     private fun gotoHome() {
-     /*
         val intent = Intent(requireContext(), MainActivity::class.java)
         requireActivity().finish()
         startActivity(intent)
-      */
     }
 
     private fun observeLiveData(owner: LifecycleOwner) {
-        with(viewModel) {
+        with(loginViewModel) {
             authState.observe(owner) {
                 when (it.status) {
                     Status.LOADING -> it.data?.let { state ->
@@ -189,79 +193,94 @@ class LoginFragment : Fragment() {
 
     private fun setupDialogs() {
         with(errorDialog) {
-            setTitle("Login Error")
+            setTitle("Giriş Hatası")
             setCancelable(false)
             setButton(
-                AlertDialog.BUTTON_POSITIVE, "OK"
+                AlertDialog.BUTTON_POSITIVE, "Tamam"
             ) { dialog, _ ->
                 dialog.cancel()
             }
         }
 
         with(verifiedEmailDialog) {
-            setTitle("Email Verification")
-            setMessage("Do you want to verify your email?")
+            setTitle("E-posta Doğrulama")
+            setMessage("Lütfen e-posta adresinizi doğrulayın \nDoğrulama linki göndermek ister misiniz?")
             setCancelable(false)
             setButton(
-                AlertDialog.BUTTON_POSITIVE, "Yes"
+                AlertDialog.BUTTON_POSITIVE, "Gönder"
             ) { _, _ ->
-                viewModel.sendVerificationEmail()
-                viewModel.signOut()
+                loginViewModel.sendVerificationEmail()
+                loginViewModel.signOut()
             }
             setButton(
-                AlertDialog.BUTTON_NEGATIVE, "No"
+                AlertDialog.BUTTON_NEGATIVE, "Hayır"
             ) { dialog, _ ->
                 dialog.cancel()
-                viewModel.signOut()
+                loginViewModel.signOut()
             }
         }
 
         with(verificationEmailSentDialog) {
-            setTitle("Email Verification")
-            setMessage("Verification email sent successfully.")
+            setTitle("E-posta Doğrulama")
+            setMessage("Doğrulama e-postası başarıyla gönderildi.")
             setCancelable(false)
             setButton(
-                AlertDialog.BUTTON_POSITIVE, "OK"
+                AlertDialog.BUTTON_POSITIVE, "Tamam"
             ) { dialog, _ ->
                 dialog.cancel()
             }
         }
 
         with(verificationEmailSentErrorDialog) {
-            setTitle("Email Verification Error")
-            setMessage("Failed to send verification email. Would you like to try again?")
+            setTitle("E-posta Doğrulama Hatası")
+            setMessage("Doğrulama e-postası gönderilemedi. Tekrar denemek ister misiniz?")
             setCancelable(false)
             setButton(
-                AlertDialog.BUTTON_POSITIVE, "Yes"
+                AlertDialog.BUTTON_POSITIVE, "Evet"
             ) { _, _ ->
-                viewModel.sendVerificationEmail()
-                viewModel.signOut()
+                loginViewModel.sendVerificationEmail()
+                loginViewModel.signOut()
             }
             setButton(
-                AlertDialog.BUTTON_NEGATIVE, "No"
+                AlertDialog.BUTTON_NEGATIVE, "Hayır"
             ) { dialog, _ ->
                 dialog.cancel()
-                viewModel.signOut()
+                loginViewModel.signOut()
             }
         }
 
         with(forgotPasswordDialog) {
-            setTitle("Forgot Password")
-            setMessage("Password reset link sent to your email address.")
+            setTitle("Şifremi Unuttum")
+            setMessage("Şifre sıfırlama bağlantısı e-posta adresinize gönderildi.")
             setCancelable(false)
             setButton(
-                AlertDialog.BUTTON_NEGATIVE, "Close"
+                AlertDialog.BUTTON_NEGATIVE, "Kapat"
             ) { dialog, _ ->
                 dialog.cancel()
             }
         }
 
         with(forgotPasswordSuccessDialog) {
-            setTitle("Forgot Password")
-            setMessage("Your new password has been sent to your email address.")
+            setTitle("Şifremi Unuttum")
+            setMessage("Yeni şifreniz e-posta adresinize gönderildi.")
             setCancelable(false)
             setButton(
-                AlertDialog.BUTTON_POSITIVE, "OK"
+                AlertDialog.BUTTON_POSITIVE, "Tamam"
+            ) { dialog, _ ->
+                dialog.cancel()
+            }
+        }
+        with(emailVerificationReminderDialog) {
+            setTitle("E-posta Doğrulama Gerekli")
+            setMessage("E-posta adresinizi doğrulamadınız. Lütfen e-postanızı kontrol edin ve doğrulama işlemini tamamlayın. Eğer doğrulama e-postası ulaşmadıysa, tekrar gönderebiliriz.")
+            setCancelable(false)
+            setButton(
+                AlertDialog.BUTTON_POSITIVE, "Tekrar Gönder"
+            ) { _, _ ->
+                loginViewModel.sendVerificationEmail()
+            }
+            setButton(
+                AlertDialog.BUTTON_NEGATIVE, "Kapat"
             ) { dialog, _ ->
                 dialog.cancel()
             }
@@ -283,7 +302,7 @@ class LoginFragment : Fragment() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 task.getResult(ApiException::class.java)?.idToken?.let { token ->
-                    viewModel.signInWithGoogle(token)
+                    loginViewModel.signInWithGoogle(token)
                 }
             } catch (e: ApiException) {
                 Toast.makeText(

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.Navigation
 import com.izmirsoftware.petsmatch.databinding.FragmentCreatePetPage3Binding
 import com.izmirsoftware.petsmatch.util.hideBottomNavigation
 import com.izmirsoftware.petsmatch.util.showBottomNavigation
@@ -27,6 +28,7 @@ class CreatePetPage3Fragment : Fragment() {
         val root: View = binding.root
 
         observeLiveData(viewLifecycleOwner)
+        setOnClickItems()
 
         return root
     }
@@ -38,6 +40,20 @@ class CreatePetPage3Fragment : Fragment() {
 
     private fun observeLiveData(owner: LifecycleOwner) {
 
+    }
+
+    private fun setOnClickItems() {
+        with(binding) {
+            buttonSave.setOnClickListener {
+                gotoEntryForCreate(it)
+            }
+        }
+    }
+
+    private fun gotoEntryForCreate(view: View) {
+        val direction =
+            CreatePetPage3FragmentDirections.actionCreatePetPage3FragmentToEntryForCreateFragment()
+        Navigation.findNavController(view).navigate(direction)
     }
 
     override fun onStart() {

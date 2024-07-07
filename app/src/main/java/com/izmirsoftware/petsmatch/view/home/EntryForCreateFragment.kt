@@ -33,19 +33,16 @@ class EntryForCreateFragment : Fragment() {
 
     private fun setOnClickItems() {
         with(binding) {
-/*
-            toolbar.setNavigationOnClickListener {
-                Navigation.findNavController(it)
-                    .popBackStack()
-            }
-*/
-
             fab.setOnClickListener {
-                val direction =
-                    EntryForCreateFragmentDirections.actionEntryForCreateFragmentToCreatePetPage1Fragment()
-                Navigation.findNavController(it).navigate(direction)
+                gotoCreatePetPage1(it)
             }
         }
+    }
+
+    private fun gotoCreatePetPage1(view: View) {
+        val direction =
+            EntryForCreateFragmentDirections.actionEntryForCreateFragmentToCreatePetPage1Fragment()
+        Navigation.findNavController(view).navigate(direction)
     }
 
     override fun onStart() {

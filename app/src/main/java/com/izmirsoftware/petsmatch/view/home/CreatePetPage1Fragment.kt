@@ -35,9 +35,7 @@ class CreatePetPage1Fragment : Fragment() {
     private fun setOnClickItems() {
         with(binding) {
             buttonNextPage.setOnClickListener {
-                val direction =
-                    CreatePetPage1FragmentDirections.actionCreatePetPage1FragmentToCreatePetPage2Fragment()
-                Navigation.findNavController(it).navigate(direction)
+                gotoCreatePetPage2(it)
             }
         }
     }
@@ -49,6 +47,12 @@ class CreatePetPage1Fragment : Fragment() {
 
     private fun observeLiveData(owner: LifecycleOwner) {
 
+    }
+
+    private fun gotoCreatePetPage2(view: View) {
+        val direction =
+            CreatePetPage1FragmentDirections.actionCreatePetPage1FragmentToCreatePetPage2Fragment()
+        Navigation.findNavController(view).navigate(direction)
     }
 
     override fun onStart() {

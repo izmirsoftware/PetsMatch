@@ -46,6 +46,7 @@
             android:textColor="@android:color/holo_blue_light" />
 
         <ProgressBar
+            android:visibility="gone"
             android:layout_gravity="center"
             android:id="@+id/pbSignIn"
             android:layout_width="wrap_content"

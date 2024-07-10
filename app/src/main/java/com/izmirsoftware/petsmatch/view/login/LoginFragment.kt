@@ -15,6 +15,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
+import com.izmirsoftware.petsmatch.view.MainActivity
+
 import com.izmirsoftware.petsmatch.databinding.FragmentLoginBinding
 import com.izmirsoftware.petsmatch.util.Status
 import com.izmirsoftware.petsmatch.util.startLoadingProcess

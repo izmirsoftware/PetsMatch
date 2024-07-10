@@ -12,10 +12,11 @@ data class Pet(
     var imagesUrl: List<String>? = null, // Hayvanın diğer resim URL'leri
     var duringEstrus: Boolean? = null, // Hayvan kızgınlık döneminde mi?
     var personality: String? = null, // Hayvanın kişilik tanımı
-    var interests: List<String>? = null, // Hayvanın ilgi alanları
+    var interests: String? = null, // Hayvanın ilgi alanları
     var vaccinations: Boolean? = null, // Hayvanın aşıları tam mı?
-    var allergies: List<String>? = null, // Hayvanın alerjileri
+    var allergies: String? = null, // Hayvanın alerjileri
     var ownerId: String? = null // Hayvanın sahibinin kimliği
+    //TODO: ilanı veren kişi kaç yavru istiyor kısmı eklenebilir
 )
 
 enum class Genus {

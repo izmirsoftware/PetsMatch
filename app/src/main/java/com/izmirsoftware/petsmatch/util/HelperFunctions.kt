@@ -41,6 +41,7 @@ fun setupDialogs(errorDialog: AlertDialog, activity: Activity? = null) {
         }
     }
 }
+
 fun getCurrentTime(): String {
     val currentTime = System.currentTimeMillis()
     val dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault())

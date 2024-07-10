@@ -12,17 +12,17 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-/*
+
 fun hideBottomNavigation(act: FragmentActivity?) {
-    val bottomNavigationView = act?.findViewById<BottomNavigationView>(R.id.nav_view)
+    val bottomNavigationView = act?.findViewById<BottomNavigationView>(R.id.main_bottom_navigation)
     bottomNavigationView?.visibility = View.GONE
 }
 
 fun showBottomNavigation(act: FragmentActivity?) {
-    val bottomNavigationView = act?.findViewById<BottomNavigationView>(R.id.nav_view)
+    val bottomNavigationView = act?.findViewById<BottomNavigationView>(R.id.main_bottom_navigation)
     bottomNavigationView?.visibility = View.VISIBLE
 }
-*/
+
 fun startLoadingProcess(progressDialog: ProgressDialog?) {
     progressDialog?.setMessage("Lütfen bekleyin...")
     progressDialog?.setCancelable(false)

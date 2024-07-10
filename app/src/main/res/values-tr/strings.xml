@@ -12,4 +12,5 @@
     <string name="create_pet_color">Hayvanın rengi</string>
     <string name="create_pet_during_estrus">Kızgılık döneminde mi?</string>
     <string name="next_page">Sonraki Sayfa</string>
+    <string name="error_text">Hata : Tekrar Deneyin</string>
 </resources>

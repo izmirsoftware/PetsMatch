@@ -1,9 +1,11 @@
 package com.izmirsoftware.petsmatch.repo
 
+import android.net.Uri
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.storage.UploadTask
 import com.izmirsoftware.petsmatch.model.Pet
 import com.izmirsoftware.petsmatch.model.UserModel
 
@@ -27,4 +29,12 @@ interface FirebaseRepoInterFace {
     fun getAllPetsFromFirestore(limit: Long): Task<QuerySnapshot>
     fun getPetByIdFromFirestore(petId: String): Task<DocumentSnapshot>
     fun getPetsByUserId(userId: String): Task<QuerySnapshot>
+
+
+    //Firebase Storage
+    fun uploadUserProfilePhoto(
+        uri: Uri,
+        userId: String,
+        key: String,
+    ): UploadTask
 }

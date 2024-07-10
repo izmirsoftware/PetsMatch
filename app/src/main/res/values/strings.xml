@@ -12,4 +12,6 @@
     <string name="create_pet_color">Pet color</string>
     <string name="create_pet_during_estrus">During Estrus?</string>
     <string name="next_page">Next Page</string>
+    <string name="error_text">Error: Try Again</string>
+
 </resources>

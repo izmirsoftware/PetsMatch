@@ -12,6 +12,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
+
 fun hideBottomNavigation(act: FragmentActivity?) {
     val bottomNavigationView = act?.findViewById<BottomNavigationView>(R.id.main_bottom_navigation)
     bottomNavigationView?.visibility = View.GONE

@@ -1,5 +1,6 @@
 package com.izmirsoftware.petsmatch.repo
 
+import android.net.Uri
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -7,8 +8,10 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
 import com.izmirsoftware.petsmatch.model.Pet
 import com.izmirsoftware.petsmatch.model.UserModel
+import java.util.UUID
 import javax.inject.Inject
 
 
@@ -33,10 +36,7 @@ class FirebaseRepoImpl @Inject constructor(
 
     //Auth
     override fun login(email: String, password: String): Task<AuthResult> {
-        return auth.signInWithEmailAndPassword(
-            email,
-            password
-        )
+        return auth.signInWithEmailAndPassword(email, password)
     }
 
     override fun forgotPassword(email: String): Task<Void> {
@@ -44,22 +44,16 @@ class FirebaseRepoImpl @Inject constructor(
     }
 
     override fun register(email: String, password: String): Task<AuthResult> {
-        return auth.createUserWithEmailAndPassword(
-            email,
-            password
-        )
+        return auth.createUserWithEmailAndPassword(email, password)
     }
-
 
     // Firestore - User
     override fun addUserToFirestore(data: UserModel): Task<Void> {
-        return userCollection.document(data.userId.toString())
-            .set(data)
+        return userCollection.document(data.userId.toString()).set(data)
     }
 
     override fun getUserDataByDocumentId(documentId: String): Task<DocumentSnapshot> {
-        return userCollection.document(documentId)
-            .get()
+        return userCollection.document(documentId).get()
     }
 
     override fun getUsersFromFirestore(): Task<QuerySnapshot> {
@@ -67,8 +61,7 @@ class FirebaseRepoImpl @Inject constructor(
     }
 
     override fun updateUserData(userId: String, updateData: HashMap<String, Any?>): Task<Void> {
-        return userCollection.document(userId)
-            .update(updateData)
+        return userCollection.document(userId).update(updateData)
     }
 
     // Firestore - Vila
@@ -89,7 +82,14 @@ class FirebaseRepoImpl @Inject constructor(
     }
 
     override fun getPetsByUserId(userId: String): Task<QuerySnapshot> {
-        return petCollection.whereEqualTo("ownerId", userId)
-            .get()
+        return petCollection.whereEqualTo("ownerId", userId).get()
+    }
+
+    // Storage - User
+    override fun uploadUserProfilePhoto(uri: Uri, userId: String, key: String): UploadTask {
+        return imagesParentRef.child("userId_$userId")
+            .child("images")
+            .child("profile_photo.jpg")
+            .putFile(uri)
     }
 }

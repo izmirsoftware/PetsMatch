@@ -54,6 +54,7 @@ constructor(
     }
 
     fun updateUserData(updateMap: HashMap<String, Any?>) {
+        _uploadMessage.value = Resource.loading()
         viewModelScope.launch(Dispatchers.IO) {
             repo.updateUserData(currentUserId, updateMap).addOnSuccessListener {
                 _uploadMessage.value = Resource.success(null)
@@ -63,10 +64,12 @@ constructor(
         }
     }
     fun uploadUserPhoto(image : Uri, key : String, map :HashMap<String, Any?>?){
+        _uploadMessage.value = Resource.loading()
         repo.uploadUserProfilePhoto(image, currentUserId, key) // kapak resmini yüklüyoruz
             .addOnSuccessListener { task ->
                 task.storage.downloadUrl
                     .addOnSuccessListener { uri ->
+                        _uploadMessage.value = Resource.success()
                         if (map != null){
                             map[key] = uri.toString()
                             updateUserData(map)
@@ -82,27 +85,46 @@ constructor(
                 _uploadMessage.value = Resource.error(it.localizedMessage,null)
             }
     }
-    fun getMapIfDataChanged(oldUser: UserModel, newUser: UserModel) :HashMap<String, Any?>{
+    fun getMapIfDataChanged(oldUser: UserModel, newUser: UserModel) : HashMap<String, Any?> {
         val updateMap = HashMap<String, Any?>()
-        println("user : "+oldUser)
-        println("new : "+newUser)
+        println("user : $oldUser")
+        println("new : $newUser")
 
-        if (newUser.username != null && newUser.username!!.isNotEmpty() && oldUser.username != newUser.username) {
-            updateMap["username"] = newUser.username!!
+        if (newUser.username != null) {
+            if (newUser.username!!.isNotEmpty()){
+                if (oldUser.username != newUser.username){
+                    updateMap["username"] = newUser.username!!
+                }
+            }
         }
 
-        if (newUser.email != null && newUser.email!!.isNotEmpty() && oldUser.email != newUser.email) {
-            updateMap["email"] = newUser.email!!
+        if (newUser.email != null) {
+            if (newUser.email!!.isNotEmpty()){
+                if (oldUser.email != newUser.email) {
+                    updateMap["email"] = newUser.email!!
+                }
+            }
         }
-        if (newUser.phone != null && newUser.phone!!.isNotEmpty() && oldUser.phone != newUser.phone) {
-            updateMap["phone"] = newUser.phone!!
+
+        if (newUser.phone != null) {
+            if (newUser.phone!!.isNotEmpty()){
+                if (oldUser.phone != newUser.phone) {
+                    updateMap["phone"] = newUser.phone!!
+                }
+            }
         }
-        if (newUser.bio != null && newUser.bio!!.isNotEmpty() && oldUser.bio != newUser.bio) {
-            updateMap["bio"] = newUser.bio!!
+
+        if (newUser.bio != null) {
+            if (newUser.bio!!.isNotEmpty()){
+                if (oldUser.bio != newUser.bio) {
+                    updateMap["bio"] = newUser.bio!!
+                }
+            }
         }
 
         return updateMap
     }
+
     fun startLoading(){
         _uploadMessage.value = Resource.loading(null)
     }

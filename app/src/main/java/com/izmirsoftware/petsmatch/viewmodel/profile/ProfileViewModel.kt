@@ -5,12 +5,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
+import com.izmirsoftware.petsmatch.model.Comments
+import com.izmirsoftware.petsmatch.model.Location
+import com.izmirsoftware.petsmatch.model.Owner
+import com.izmirsoftware.petsmatch.model.Pet
+import com.izmirsoftware.petsmatch.model.PetCardModel
+import com.izmirsoftware.petsmatch.model.PetPost
 import com.izmirsoftware.petsmatch.model.UserModel
 import com.izmirsoftware.petsmatch.repo.FirebaseRepoInterFace
 import com.izmirsoftware.petsmatch.util.Resource
 import com.izmirsoftware.petsmatch.util.toUserModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.Date
 import javax.inject.Inject
 
 
@@ -61,5 +68,66 @@ constructor(
                 // Hata durzumunda işlemleri buraya ekleyebilirsiniz
                 _userInfoMessage.value = Resource.error("Belge alınamadı. Hata: $exception", null)
             }
+    }
+    val petCardModel = MutableLiveData<List<PetCardModel>>()
+
+    fun createPetCardModels() {
+        val petPost = PetPost()
+        petPost.title = "Çok sevimli kedi"
+        petPost.description = "Kedimiz çok sakindir, saldırganlık yapmaz, tuvalet eğitimi var."
+        petPost.location = Location(
+            city = "İzmir",
+            district = "Torbalı"
+        )
+        val currentTime = System.currentTimeMillis()
+        petPost.date = Date(currentTime)
+
+        val pet = Pet()
+        pet.profileImage = "https://cdn1.ntv.com.tr/gorsel/xXM8GccvjkmZxggiDVHP5g.jpg"
+
+        val owner = Owner()
+        owner.comments = listOf(
+            Comments(
+                rating = 4.8
+            )
+        )
+
+        petCardModel.value = listOf(
+            PetCardModel(
+                petPost = petPost,
+                pet = pet,
+                owner = owner
+            ),
+            PetCardModel(
+                petPost = petPost,
+                pet = pet,
+                owner = owner
+            ),
+            PetCardModel(
+                petPost = petPost,
+                pet = pet,
+                owner = owner
+            ),
+            PetCardModel(
+                petPost = petPost,
+                pet = pet,
+                owner = owner
+            ),
+            PetCardModel(
+                petPost = petPost,
+                pet = pet,
+                owner = owner
+            ),
+            PetCardModel(
+                petPost = petPost,
+                pet = pet,
+                owner = owner
+            ),
+            PetCardModel(
+                petPost = petPost,
+                pet = pet,
+                owner = owner
+            )
+        )
     }
 }

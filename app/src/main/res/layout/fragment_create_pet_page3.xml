@@ -6,6 +6,10 @@
     <data>
 
         <import type="androidx.navigation.Navigation" />
+
+        <variable
+            name="viewPetModel"
+            type="com.izmirsoftware.petsmatch.model.Pet" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,36 +36,54 @@
             android:id="@+id/dividerToolbar"
             android:layout_width="0dp"
             android:layout_height="2dp"
-            app:layout_constraintBottom_toTopOf="@id/scrollView"
+            app:layout_constraintBottom_toTopOf="@id/imageProfile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scrollView"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageProfile"
+            downloadImage="@{viewPetModel.profileImage}"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:paddingHorizontal="20dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="10dp"
-            app:layout_constraintBottom_toTopOf="@id/bottomLayout"
+            android:layout_height="220dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toTopOf="@id/rvPetImages"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dividerToolbar"
-            app:layout_constraintWidth_max="480dp">
+            tools:src="@drawable/placeholder" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fabAddProfileImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:layout_constraintEnd_toEndOf="@id/imageProfile"
+            app:layout_constraintTop_toTopOf="@id/imageProfile"
+            app:icon="@drawable/baseline_add_24"
+            android:text="@string/add_pet_profile_image"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Hello" />
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPetImages"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/bottomLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageProfile"
+            app:spanCount="2" />
 
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fabAddOtherImages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:layout_constraintEnd_toEndOf="@id/rvPetImages"
+            app:layout_constraintTop_toTopOf="@id/rvPetImages"
+            app:icon="@drawable/baseline_add_24"
+            android:text="@string/add_pet_other_image"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bottomLayout"
@@ -76,8 +98,8 @@
                 android:id="@+id/buttonSave"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
                 android:text="@string/save"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"

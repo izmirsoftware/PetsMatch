@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.izmirsoftware.petsmatch.databinding.FragmentEntryForCreateBinding
+import com.izmirsoftware.petsmatch.model.Pet
 import com.izmirsoftware.petsmatch.util.hideBottomNavigation
 import com.izmirsoftware.petsmatch.util.showBottomNavigation
 import com.izmirsoftware.petsmatch.viewmodel.home.EntryForCreateViewModel
@@ -41,7 +42,9 @@ class EntryForCreateFragment : Fragment() {
 
     private fun gotoCreatePetPage1(view: View) {
         val direction =
-            EntryForCreateFragmentDirections.actionEntryForCreateFragmentToCreatePetPage1Fragment()
+            EntryForCreateFragmentDirections.actionEntryForCreateFragmentToCreatePetPage1Fragment(
+                Pet()
+            )
         Navigation.findNavController(view).navigate(direction)
     }
 

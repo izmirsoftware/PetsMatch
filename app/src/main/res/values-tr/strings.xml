@@ -22,4 +22,6 @@
     <string name="save">Kaydet</string>
     <string name="title_create_post">Evcil Hayvan İlanı Oluştur</string>
     <string name="error_text">Hata : Tekrar Deneyin</string>
+    <string name="add_pet_profile_image">Profil Resmi</string>
+    <string name="add_pet_other_image">Resim Ekleyin</string>
 </resources>

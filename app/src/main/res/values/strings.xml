@@ -22,4 +22,6 @@
     <string name="save">Save</string>
     <string name="title_create_post">Create Pet Post</string>
     <string name="error_text">Error: Try Again</string>
+    <string name="add_pet_profile_image">Profile Image</string>
+    <string name="add_pet_other_image">Add images</string>
 </resources>

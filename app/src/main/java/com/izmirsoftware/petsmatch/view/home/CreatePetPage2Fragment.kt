@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.izmirsoftware.petsmatch.R
 import com.izmirsoftware.petsmatch.databinding.FragmentCreatePetPage2Binding
 import com.izmirsoftware.petsmatch.model.Pet
 import com.izmirsoftware.petsmatch.util.hideBottomNavigation
@@ -23,7 +25,10 @@ class CreatePetPage2Fragment : Fragment() {
     private val viewModel: CreatePetViewModel by viewModels()
     private var _binding: FragmentCreatePetPage2Binding? = null
     private val binding get() = _binding!!
-    private var petModel: Pet = Pet()
+    private lateinit var petModel: Pet
+    private val choose: List<String> by lazy {
+        resources.getStringArray(R.array.choose_list).toList()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,10 +55,32 @@ class CreatePetPage2Fragment : Fragment() {
 
         listenPopBackStack()
         collectDataFromPopBackStack()
+        setDropdownItems()
     }
 
     private fun observeLiveData(owner: LifecycleOwner) {
+        with(viewModel) {
+            liveDataPet.observe(owner) {
+                setDropdownItems()
+                petModel = it
 
+                with(binding) {
+                    viewPetModel = it
+
+                    when (it.duringEstrus) {
+                        true -> edittextDuringEstrus.setText(choose[0], false)
+                        false -> edittextDuringEstrus.setText(choose[1], false)
+                        else -> edittextDuringEstrus.text = null
+                    }
+
+                    when (it.vaccinations) {
+                        true -> edittextVaccinated.setText(choose[0], false)
+                        false -> edittextVaccinated.setText(choose[1], false)
+                        else -> edittextVaccinated.text = null
+                    }
+                }
+            }
+        }
     }
 
     private fun setOnClickItems() {
@@ -67,26 +94,19 @@ class CreatePetPage2Fragment : Fragment() {
     private fun collectInputData(pet: Pet): Pet {
         with(binding) {
             pet.apply {
-//                if (id.isNullOrEmpty()) {
-//                    id = UUID.randomUUID().toString()
-//                }
-//                if (edittextGenus.text.equals(genusList[0])) {
-//                    genus = Genus.CAT
-//                } else {
-//                    genus = Genus.DOG
-//                }
-//
-//                if (edittextGender.text.equals(genderList[0])) {
-//                    gender = Gender.MALE
-//                } else {
-//                    gender = Gender.FEMALE
-//                }
-//
-//                breed = edittextBreed.text?.toString()
-//                name = edittextName.text?.toString()
-//                age = edittextAge.text?.toString()?.toIntOrNull()
-//                color = edittextColor.text?.toString()
+                val duringEstrusText = edittextDuringEstrus.text.toString()
+                if (duringEstrusText.isNotBlank()) {
+                    duringEstrus = duringEstrusText == choose[0]
+                }
 
+                val vaccinatedText = edittextVaccinated.text.toString()
+                if (vaccinatedText.isNotBlank()) {
+                    vaccinations = vaccinatedText == choose[0]
+                }
+
+                personality = edittextPersonality.text.toString()
+                interests = edittextAreasInterest.text.toString()
+                allergies = edittextAllergies.text.toString()
             }
         }
 
@@ -101,6 +121,28 @@ class CreatePetPage2Fragment : Fragment() {
                 petModel = data
                 viewModel.setPetModel(data)
             }
+    }
+
+    private fun setDropdownItems() {
+        with(binding) {
+            edittextDuringEstrus.setAdapter(
+                ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_list_item_1,
+                    android.R.id.text1,
+                    choose.toList()
+                )
+            )
+
+            edittextVaccinated.setAdapter(
+                ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_list_item_1,
+                    android.R.id.text1,
+                    choose.toList()
+                )
+            )
+        }
     }
 
     private fun listenPopBackStack() {
@@ -123,7 +165,7 @@ class CreatePetPage2Fragment : Fragment() {
             CreatePetPage2FragmentDirections.actionCreatePetPage2FragmentToCreatePetPage3Fragment(
                 pet
             )
-        Navigation.findNavController(view).navigate(direction)
+        view.findNavController().navigate(direction)
     }
 
     override fun onStart() {

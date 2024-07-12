@@ -13,7 +13,7 @@
     <string name="create_pet_color">Hayvanın rengi</string>
     <string name="create_pet_during_estrus">Kızgılık döneminde mi?</string>
     <string name="create_pet_vaccinations">Aşıları tam mi?</string>
-    <string name="create_pet_allergies">Varsa alerjilerini ekleyin.</string>
+    <string name="create_pet_allergies">Varsa alerjilerini ekleyin</string>
     <string name="create_pet_personality">Kişilik tanımı</string>
     <string name="create_pet_interests">İlgi alanları</string>
     <string name="next_page">Sonraki Sayfa</string>

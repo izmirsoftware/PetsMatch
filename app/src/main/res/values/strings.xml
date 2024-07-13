@@ -24,4 +24,8 @@
     <string name="error_text">Error: Try Again</string>
     <string name="add_pet_profile_image">Profile Image</string>
     <string name="add_pet_other_image">Add images</string>
+    <string name="open_gallery">Open Gallery</string>
+    <string name="open_camera">Open Camera</string>
+    <string name="image_source">Image Source</string>
+    <string name="error_message">Error message:</string>
 </resources>

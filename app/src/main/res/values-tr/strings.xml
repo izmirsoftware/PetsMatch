@@ -24,4 +24,8 @@
     <string name="error_text">Hata : Tekrar Deneyin</string>
     <string name="add_pet_profile_image">Profil Resmi</string>
     <string name="add_pet_other_image">Resim Ekleyin</string>
+    <string name="open_gallery">Galeriyi aç</string>
+    <string name="open_camera">Kamerayı aç</string>
+    <string name="image_source">Resim Kaynağı</string>
+    <string name="error_message">Hata mesajı:</string>
 </resources>

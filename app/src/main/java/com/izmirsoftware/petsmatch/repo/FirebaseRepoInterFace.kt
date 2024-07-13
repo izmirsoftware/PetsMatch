@@ -37,4 +37,13 @@ interface FirebaseRepoInterFace {
         userId: String,
         key: String,
     ): UploadTask
+
+    //Storege - Pet
+    fun addPetImage(
+        petId: String,
+        userId: String,
+        image: ByteArray,
+    ): UploadTask
+
+    fun deletePetImage(url: String): Task<Void>
 }

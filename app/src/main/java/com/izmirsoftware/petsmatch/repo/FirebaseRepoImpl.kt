@@ -15,7 +15,9 @@ import java.util.UUID
 import javax.inject.Inject
 
 
-class FirebaseRepoImpl @Inject constructor(
+class FirebaseRepoImpl
+@Inject
+constructor(
     private val auth: FirebaseAuth,
     firestore: FirebaseFirestore,
     private val storage: FirebaseStorage,
@@ -64,7 +66,7 @@ class FirebaseRepoImpl @Inject constructor(
         return userCollection.document(userId).update(updateData)
     }
 
-    // Firestore - Vila
+    // Firestore - Pet
     override fun addPetToFirestore(petId: String, pet: Pet): Task<Void> {
         return petCollection.document(petId).set(pet)
     }
@@ -91,5 +93,23 @@ class FirebaseRepoImpl @Inject constructor(
             .child("images")
             .child("profile_photo.jpg")
             .putFile(uri)
+    }
+
+    //Storege - Pet
+    override fun addPetImage(
+        petId: String,
+        userId: String,
+        image: ByteArray,
+    ): UploadTask {
+        return imagesParentRef
+            .child("userId_$userId")
+            .child("images")
+            .child("jobId_$petId")
+            .child("${UUID.randomUUID()}.jpg")
+            .putBytes(image)
+    }
+
+    override fun deletePetImage(url: String): Task<Void> {
+        return storage.getReferenceFromUrl(url).delete()
     }
 }

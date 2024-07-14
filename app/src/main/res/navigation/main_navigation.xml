@@ -82,6 +82,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="pet"
+            app:argType="com.izmirsoftware.petsmatch.model.Pet" />
     </fragment>
     <fragment
         android:id="@+id/createPetPage2Fragment"
@@ -95,6 +98,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="pet"
+            app:argType="com.izmirsoftware.petsmatch.model.Pet" />
     </fragment>
     <fragment
         android:id="@+id/createPetPage3Fragment"
@@ -110,6 +116,9 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/entryForCreateFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="pet"
+            app:argType="com.izmirsoftware.petsmatch.model.Pet" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"

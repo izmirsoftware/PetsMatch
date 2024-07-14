@@ -1,5 +1,7 @@
 package com.izmirsoftware.petsmatch.model
 
+import java.io.Serializable
+
 data class Pet(
     var id: String? = null, // Hayvanın benzersiz kimliği
     var genus: Genus? = null, // Hayvanın türü (kedi veya köpek)
@@ -17,7 +19,7 @@ data class Pet(
     var allergies: String? = null, // Hayvanın alerjileri
     var ownerId: String? = null // Hayvanın sahibinin kimliği
     //TODO: ilanı veren kişi kaç yavru istiyor kısmı eklenebilir
-)
+) : Serializable
 
 enum class Genus {
     CAT,

@@ -10,6 +10,7 @@ import com.izmirsoftware.petsmatch.R
 import com.izmirsoftware.petsmatch.databinding.CardPetImageItemBinding
 
 class AdapterPetImageCard : RecyclerView.Adapter<AdapterPetImageCard.ViewHolder>() {
+    lateinit var deleteImageListener: ((Int) -> Unit)
     private val diffUtil = object : DiffUtil.ItemCallback<String>() {
         override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
             return oldItem === newItem
@@ -30,7 +31,11 @@ class AdapterPetImageCard : RecyclerView.Adapter<AdapterPetImageCard.ViewHolder>
         set(value) = asyncListDiffer.submitList(value)
 
     inner class ViewHolder(val binding: CardPetImageItemBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root) {
+        fun onClickDeleteImage(position: Int) {
+            deleteImageListener.invoke(position)
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = CardPetImageItemBinding.inflate(
@@ -47,11 +52,18 @@ class AdapterPetImageCard : RecyclerView.Adapter<AdapterPetImageCard.ViewHolder>
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val image = images[position]
+        with(holder) {
+            with(binding) {
+                Glide.with(itemView)
+                    .load(image)
+                    .placeholder(R.drawable.placeholder)
+                    .centerCrop()
+                    .into(imagePetItem)
 
-        Glide.with(holder.itemView)
-            .load(image)
-            .placeholder(R.drawable.placeholder)
-            .centerCrop()
-            .into(holder.binding.imagePetItem)
+                fabDelete.setOnClickListener {
+                    onClickDeleteImage(position)
+                }
+            }
+        }
     }
 }

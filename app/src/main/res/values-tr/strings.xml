@@ -28,4 +28,5 @@
     <string name="open_camera">Kamerayı aç</string>
     <string name="image_source">Resim Kaynağı</string>
     <string name="error_message">Hata mesajı:</string>
+    <string name="add_other_images_message">Daha fazla resim eklemek için aşağıdaki butonu kullanabilirsiniz.</string>
 </resources>

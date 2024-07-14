@@ -23,6 +23,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.izmirsoftware.petsmatch.R
 import com.izmirsoftware.petsmatch.adapter.AdapterPetImageCard
+import com.izmirsoftware.petsmatch.adapter.imageDownload
 import com.izmirsoftware.petsmatch.databinding.CustomDialogChooseImageSourceBinding
 import com.izmirsoftware.petsmatch.databinding.FragmentCreatePetPage3Binding
 import com.izmirsoftware.petsmatch.model.Pet
@@ -44,17 +45,21 @@ class CreatePetPage3Fragment : Fragment() {
     private var _binding: FragmentCreatePetPage3Binding? = null
     private val binding get() = _binding!!
     private val adapter: AdapterPetImageCard by lazy { AdapterPetImageCard() }
-    private lateinit var imageLauncher: ActivityResultLauncher<Intent>
     private lateinit var multipleImageLauncher: ActivityResultLauncher<Intent>
     private lateinit var cameraLauncher: ActivityResultLauncher<Uri>
-    private lateinit var imageUri: Uri
-    private val uploadedProfileImage = mutableListOf<String>()
-    private val selectedUriProfileImage = mutableListOf<String>()
-    private val selectedByteArrayProfileImage = mutableListOf<ByteArray>()
     private val uploadedImages = mutableListOf<String>()
     private val selectedUriImages = mutableListOf<String>()
     private val selectedByteArrayImages = mutableListOf<ByteArray>()
-    private val dialogChooseImageSource: Dialog by lazy { createDialogChooseImageSource() }
+    private lateinit var imageUri: Uri
+
+    private lateinit var profileCameraLauncher: ActivityResultLauncher<Uri>
+    private lateinit var profileImageLauncher: ActivityResultLauncher<Intent>
+    private lateinit var profileImageUri: Uri
+    private var uploadedProfileImage: String? = null
+    private var selectedUriProfileImage: String? = null
+    private var selectedByteArrayProfileImage: ByteArray? = null
+    private val dialogChooseImageSource: Dialog by lazy { createDialogChooseImageSource(false) }
+    private val profileDialogChooseImageSource: Dialog by lazy { createDialogChooseImageSource(true) }
     private val errorDialog: AlertDialog by lazy { AlertDialog.Builder(requireContext()).create() }
 
     private lateinit var petModel: Pet
@@ -86,7 +91,7 @@ class CreatePetPage3Fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getPetImagesSample()
+        //viewModel.getPetImagesSample()
         listenPopBackStack()
     }
 
@@ -115,11 +120,26 @@ class CreatePetPage3Fragment : Fragment() {
                 }
             }
 
-            liveDataPet.observe(owner) {
+            liveDataPet.observe(owner) { pet ->
+                pet.imagesUrl?.let { images ->
+                    uploadedImages.clear()
+                    uploadedImages.addAll(arrayOf(images.toString()))
+                }
+
+                pet.profileImage?.let { image ->
+                    uploadedProfileImage = image
+                }
 
             }
+
             liveDataImages.observe(owner) { imageList ->
                 adapter.images = imageList.toList()
+
+                if (imageList.isNotEmpty()) {
+                    binding.textOtherImagesMessage.visibility = View.GONE
+                } else {
+                    binding.textOtherImagesMessage.visibility = View.VISIBLE
+                }
             }
         }
     }
@@ -140,25 +160,30 @@ class CreatePetPage3Fragment : Fragment() {
 
     private fun setOnClickItems() {
         with(binding) {
+            fabAddProfileImage.setOnClickListener {
+                profileDialogChooseImageSource.show()
+            }
+
+            fabAddOtherImages.setOnClickListener {
+                dialogChooseImageSource.show()
+            }
+
             buttonSave.setOnClickListener {
                 viewModel.addImageAndPetToFirebase(
+                    selectedByteArrayProfileImage,
                     selectedByteArrayImages,
                     petModel,
+                    uploadedProfileImage,
                     uploadedImages
                 )
             }
-        }
-    }
 
-    private fun collectInputData(pet: Pet): Pet {
-        with(binding) {
-            pet.apply {
-
-
+            adapter.deleteImageListener = { position ->
+                selectedByteArrayImages.removeAt(position)
+                selectedUriImages.removeAt(position)
+                viewModel.setImages(selectedUriImages.toList())
             }
         }
-
-        return pet
     }
 
     private fun listenPopBackStack() {
@@ -177,11 +202,11 @@ class CreatePetPage3Fragment : Fragment() {
     }
 
     //TODO: profil resmi seçmek için ayrı intent oluştur
-    private fun openImagePicker() {
+    private fun openProfileImagePicker() {
         val imageIntent = Intent(
             Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
-        imageLauncher.launch(imageIntent)
+        profileImageLauncher.launch(imageIntent)
     }
 
     private fun openMultipleImagePicker() {
@@ -197,12 +222,17 @@ class CreatePetPage3Fragment : Fragment() {
         )
     }
 
+    private fun openCameraProfileImage() {
+        profileImageUri = createImageUri(requireContext())
+        profileCameraLauncher.launch(profileImageUri)
+    }
+
     private fun openCamera() {
         imageUri = createImageUri(requireContext())
         cameraLauncher.launch(imageUri)
     }
 
-    private fun createDialogChooseImageSource(): Dialog {
+    private fun createDialogChooseImageSource(forProfileImage: Boolean): Dialog {
         val view = CustomDialogChooseImageSourceBinding.inflate(layoutInflater)
 
         val dialog = Dialog(requireContext())
@@ -211,15 +241,23 @@ class CreatePetPage3Fragment : Fragment() {
 
         view.cardCameraImageSource.setOnClickListener {
             if (checkPermissionImageCamera(requireActivity(), 800)) {
-                openCamera()
+                if (forProfileImage) {
+                    openCameraProfileImage()
+                } else {
+                    openCamera()
+                }
+
                 dialog.dismiss()
             }
         }
 
         view.cardGalleryImageSource.setOnClickListener {
             if (checkPermissionImageGallery(requireActivity(), 801)) {
-                openImagePicker()
-                openMultipleImagePicker()
+                if (forProfileImage) {
+                    openProfileImagePicker()
+                } else {
+                    openMultipleImagePicker()
+                }
                 dialog.dismiss()
             }
         }
@@ -235,7 +273,7 @@ class CreatePetPage3Fragment : Fragment() {
         cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) {
             if (it) {
                 selectedUriImages.add(imageUri.toString())
-                adapter.images = selectedUriImages.toList()
+                viewModel.setImages(selectedUriImages.toList())
 
                 val bitmap = convertUriToBitmap(imageUri, requireActivity())
                 compressJpegInBackground(bitmap) { byteArrayImage ->
@@ -244,20 +282,6 @@ class CreatePetPage3Fragment : Fragment() {
             }
         }
 
-        imageLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    result.data?.data?.let {
-                        selectedUriImages.add(it.toString())
-                        adapter.images = selectedUriImages.toList()
-
-                        val bitmap = convertUriToBitmap(it, requireActivity())
-                        compressJpegInBackground(bitmap) { byteArrayImage ->
-                            selectedByteArrayImages.add(byteArrayImage)
-                        }
-                    }
-                }
-            }
 
         multipleImageLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -267,12 +291,41 @@ class CreatePetPage3Fragment : Fragment() {
                         for (i in 0..<size) {
                             val imageUri = data.getItemAt(i).uri
                             selectedUriImages.add(imageUri.toString())
-                            adapter.images = selectedUriImages.toList()
+                            viewModel.setImages(selectedUriImages.toList())
 
                             val bitmap = convertUriToBitmap(imageUri, requireActivity())
                             compressJpegInBackground(bitmap) { byteArrayImage ->
                                 selectedByteArrayImages.add(byteArrayImage)
                             }
+                        }
+                    }
+                }
+            }
+
+
+        profileCameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+            if (it) {
+
+                selectedUriProfileImage = profileImageUri.toString()
+                binding.imageProfile.imageDownload(profileImageUri.toString(), requireContext())
+
+                val bitmap = convertUriToBitmap(profileImageUri, requireActivity())
+                compressJpegInBackground(bitmap) { byteArrayImage ->
+                    selectedByteArrayProfileImage = byteArrayImage
+                }
+            }
+        }
+
+        profileImageLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    result.data?.data?.let {
+                        selectedUriProfileImage = it.toString()
+                        binding.imageProfile.imageDownload(it.toString(), requireContext())
+
+                        val bitmap = convertUriToBitmap(it, requireActivity())
+                        compressJpegInBackground(bitmap) { byteArrayImage ->
+                            selectedByteArrayProfileImage = byteArrayImage
                         }
                     }
                 }

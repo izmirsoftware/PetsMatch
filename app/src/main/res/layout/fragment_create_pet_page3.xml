@@ -56,7 +56,7 @@
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/fabAddProfileImage"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_margin="4dp"
             android:text="@string/add_pet_profile_image"
             app:icon="@drawable/baseline_add_24"
@@ -75,15 +75,29 @@
             app:layout_constraintTop_toBottomOf="@id/imageProfile"
             app:spanCount="2" />
 
+        <TextView
+            android:id="@+id/textOtherImagesMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:gravity="center"
+            android:text="@string/add_other_images_message"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="@id/rvPetImages"
+            app:layout_constraintEnd_toEndOf="@id/rvPetImages"
+            app:layout_constraintStart_toStartOf="@id/rvPetImages"
+            app:layout_constraintTop_toTopOf="@id/rvPetImages" />
+
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/fabAddOtherImages"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_margin="4dp"
             android:text="@string/add_pet_other_image"
             app:icon="@drawable/baseline_add_24"
-            app:layout_constraintEnd_toEndOf="@id/rvPetImages"
-            app:layout_constraintTop_toTopOf="@id/rvPetImages" />
+            app:layout_constraintBottom_toBottomOf="@id/rvPetImages"
+            app:layout_constraintEnd_toEndOf="@id/rvPetImages" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bottomLayout"

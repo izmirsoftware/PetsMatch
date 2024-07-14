@@ -20,7 +20,7 @@ fun createImageUri(context: Context): Uri {
     val image = File(context.filesDir, "$photoName.png")
     return FileProvider.getUriForFile(
         context,
-        "com.gemliksiteyonetim.temizliktakip.FileProvider",
+        "com.izmirsoftware.petsmatch.FileProvider",
         image
     )
 }

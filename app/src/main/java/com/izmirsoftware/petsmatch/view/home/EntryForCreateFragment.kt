@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.Navigation
+import com.izmirsoftware.petsmatch.adapter.AdapterPetCard
+import com.izmirsoftware.petsmatch.adapter.PetAdapter
 import com.izmirsoftware.petsmatch.databinding.FragmentEntryForCreateBinding
 import com.izmirsoftware.petsmatch.util.hideBottomNavigation
 import com.izmirsoftware.petsmatch.util.showBottomNavigation
@@ -18,6 +21,7 @@ class EntryForCreateFragment : Fragment() {
     private val viewModel: EntryForCreateViewModel by viewModels()
     private var _binding: FragmentEntryForCreateBinding? = null
     private val binding get() = _binding!!
+    private val adapter = PetAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,8 +31,20 @@ class EntryForCreateFragment : Fragment() {
         val root: View = binding.root
 
         setOnClickItems()
+        viewModel.createPetCardModels()
+        binding.rvEntryCreate.adapter = adapter
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeLiveData()
+    }
+    private fun observeLiveData() {
+        viewModel.petCardModel.observe(viewLifecycleOwner) {
+            adapter.petCardList = it.toList()
+        }
     }
 
     private fun setOnClickItems() {
@@ -40,8 +56,7 @@ class EntryForCreateFragment : Fragment() {
     }
 
     private fun gotoCreatePetPage1(view: View) {
-        val direction =
-            EntryForCreateFragmentDirections.actionEntryForCreateFragmentToCreatePetPage1Fragment()
+        val direction = EntryForCreateFragmentDirections.actionEntryForCreateFragmentToCreatePetPage1Fragment()
         Navigation.findNavController(view).navigate(direction)
     }
 

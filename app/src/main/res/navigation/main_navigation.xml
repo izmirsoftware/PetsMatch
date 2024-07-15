@@ -69,7 +69,11 @@
         android:id="@+id/createPostFragment"
         android:name="com.izmirsoftware.petsmatch.view.home.CreatePostFragment"
         android:label="fragment_create_post"
-        tools:layout="@layout/fragment_create_post" />
+        tools:layout="@layout/fragment_create_post" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/createPetPage1Fragment"
         android:name="com.izmirsoftware.petsmatch.view.home.CreatePetPage1Fragment"

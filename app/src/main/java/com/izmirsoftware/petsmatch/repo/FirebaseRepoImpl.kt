@@ -75,7 +75,11 @@ constructor(
         return petCollection.document(petId).delete()
     }
 
-    override fun getAllPetsFromFirestore(limit: Long): Task<QuerySnapshot> {
+    override fun getAllPetsFromFirestore(): Task<QuerySnapshot> {
+        return petCollection.get()
+    }
+
+    override fun getAllPetsFromFirestoreWithLimit(limit: Long): Task<QuerySnapshot> {
         return petCollection.limit(limit).get()
     }
 

@@ -22,6 +22,7 @@ class EntryForCreateFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val adapter: AdapterPetCard by lazy {
+        //TODO: Hayvanlar için farklı adapter ve görünüm oluştur
         AdapterPetCard()
     }
 

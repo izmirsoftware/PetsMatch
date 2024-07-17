@@ -63,7 +63,7 @@ class AdapterPetCard : RecyclerView.Adapter<AdapterPetCard.ViewHolder>() {
 
             petCardModel.petPost?.date?.let {
                 textDate.text = buildString {
-                    append("İlan tarihi: ")
+                    append("İlan tarihi\n")
                     append(SimpleDateFormat(
                         "dd/MM/yyyy",
                         Locale.getDefault()

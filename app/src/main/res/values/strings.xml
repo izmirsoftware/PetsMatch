@@ -22,4 +22,25 @@
     <string name="save">Save</string>
     <string name="title_create_post">Create Pet Post</string>
     <string name="error_text">Error: Try Again</string>
+
+
+
+    //Entry
+    //Login
+    <string name="welcome_title">Welcome!</string>
+    <string name="welcome_description">PetsMatch is a matching platform for pet owners and those looking to adopt.</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="go_to_register">Or try these methods</string>
+
+    //Register
+    <string name="register_title">Register Now!</string>
+    <string name="register_description">Join PetsMatch to connect with pet owners or find a new companion.</string>
+    <string name="full_name_hint">Full Name</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="register">Sign Up</string>
+    <string name="login_methods">Or try these methods</string>
+
 </resources>

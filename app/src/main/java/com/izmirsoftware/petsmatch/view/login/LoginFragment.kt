@@ -84,7 +84,7 @@ class LoginFragment : Fragment() {
 */
 
         with(binding) {
-            btnLogin.setOnClickListener {
+            btnSignIn.setOnClickListener {
                 val email = etEmail.text.toString()
                 val password = etPassword.text.toString()
                 if (email.isNotEmpty() && password.length > 5) {

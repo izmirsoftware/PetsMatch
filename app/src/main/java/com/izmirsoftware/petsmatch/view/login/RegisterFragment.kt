@@ -72,9 +72,11 @@ class RegisterFragment : Fragment() {
         binding.btnGoogle.setOnClickListener {
             googleSignIn()
         }*/
+      /*
         binding.tvGoToLogin.setOnClickListener {
             findNavController().popBackStack()
         }
+       */
 
         binding.btnRegister.setOnClickListener {
             val name = binding.etFullName.text.toString()

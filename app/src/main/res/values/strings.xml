@@ -29,4 +29,7 @@
     <string name="image_source">Image Source</string>
     <string name="error_message">Error message:</string>
     <string name="add_other_images_message">You can use the button below to add more images.</string>
+    <string name="goto_login_message">You must log in to create a new ad and register your pets.\\nWould you like to go to the login page?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

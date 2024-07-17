@@ -26,7 +26,8 @@ interface FirebaseRepoInterFace {
     //Firestore - Pet
     fun addPetToFirestore(petId: String, pet: Pet): Task<Void>
     fun deletePetFromFirestore(petId: String): Task<Void>
-    fun getAllPetsFromFirestore(limit: Long): Task<QuerySnapshot>
+    fun getAllPetsFromFirestore(): Task<QuerySnapshot>
+    fun getAllPetsFromFirestoreWithLimit(limit: Long): Task<QuerySnapshot>
     fun getPetByIdFromFirestore(petId: String): Task<DocumentSnapshot>
     fun getPetsByUserId(userId: String): Task<QuerySnapshot>
 

@@ -12,6 +12,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.firebase.auth.FirebaseAuth
 import com.izmirsoftware.petsmatch.R
 import com.izmirsoftware.petsmatch.databinding.FragmentCreatePetPage1Binding
 import com.izmirsoftware.petsmatch.model.Gender
@@ -29,7 +30,8 @@ class CreatePetPage1Fragment : Fragment() {
     private val viewModel: CreatePetViewModel by viewModels()
     private var _binding: FragmentCreatePetPage1Binding? = null
     private val binding get() = _binding!!
-    private lateinit var petModel: Pet
+    private val userId = FirebaseAuth.getInstance().currentUser?.uid
+    private var petModel = Pet()
     private val genusList: List<String> by lazy {
         resources.getStringArray(R.array.genus_list).toList()
     }
@@ -128,6 +130,7 @@ class CreatePetPage1Fragment : Fragment() {
                 name = edittextName.text?.toString()
                 age = edittextAge.text?.toString()?.toIntOrNull()
                 color = edittextColor.text?.toString()
+                ownerId = userId
             }
         }
 

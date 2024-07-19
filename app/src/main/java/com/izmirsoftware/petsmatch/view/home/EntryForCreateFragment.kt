@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.izmirsoftware.petsmatch.R
 import com.izmirsoftware.petsmatch.adapter.AdapterPetCard
@@ -92,6 +93,14 @@ class EntryForCreateFragment : Fragment() {
         with(binding) {
             fab.setOnClickListener {
                 gotoCreatePetPage1(it)
+            }
+
+            adapter.onClickCardListener = { petId, view ->
+                val direction =
+                    EntryForCreateFragmentDirections.actionEntryForCreateFragmentToCreatePostFragment(
+                        petId
+                    )
+                view.findNavController().navigate(direction)
             }
         }
     }

@@ -10,6 +10,7 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.izmirsoftware.petsmatch.model.Pet
+import com.izmirsoftware.petsmatch.model.PetPost
 import com.izmirsoftware.petsmatch.model.UserModel
 import java.util.UUID
 import javax.inject.Inject
@@ -28,6 +29,7 @@ constructor(
     private val userCollection = firestore.collection("users")
     private val notificationCollection = firestore.collection("notifications")
     private val petCollection = firestore.collection("pets")
+    private val postCollection = firestore.collection("posts")
     private val reviewCollection = firestore.collection("reviews")
 
     //StorageRef
@@ -79,7 +81,7 @@ constructor(
         return petCollection.get()
     }
 
-    override fun getAllPetsFromFirestoreWithLimit(limit: Long): Task<QuerySnapshot> {
+    override fun getAllPetsFromFirestore(limit: Long): Task<QuerySnapshot> {
         return petCollection.limit(limit).get()
     }
 
@@ -89,6 +91,27 @@ constructor(
 
     override fun getPetsByUserId(userId: String): Task<QuerySnapshot> {
         return petCollection.whereEqualTo("ownerId", userId).get()
+    }
+
+    // Firestore - PetPost
+    override fun addPostToFirestore(postId: String, post: PetPost): Task<Void> {
+        return postCollection.document(postId).set(post)
+    }
+
+    override fun deletePostFromFirestore(postId: String): Task<Void> {
+        return postCollection.document(postId).delete()
+    }
+
+    override fun getAllPostsFromFirestore(): Task<QuerySnapshot> {
+        return postCollection.get()
+    }
+
+    override fun getAllPostsFromFirestore(limit: Long): Task<QuerySnapshot> {
+        return postCollection.limit(limit).get()
+    }
+
+    override fun getPostByIdFromFirestore(postId: String): Task<DocumentSnapshot> {
+        return postCollection.document(postId).get()
     }
 
     // Storage - User

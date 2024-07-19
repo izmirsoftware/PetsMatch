@@ -40,7 +40,7 @@ constructor(
     ) {
         petModel.id?.let { petId ->
             profileImage?.let { image ->
-                liveDataStatus.mutable.value = Resource.loading(true)
+                liveDataResult.mutable.value = Resource.loading(true)
                 firestoreRepo.addPetImage(petId, userId, image)
                     .addOnSuccessListener { task ->
                         task.storage.downloadUrl
@@ -53,21 +53,21 @@ constructor(
                                     uploadedImages
                                 )
                             }.addOnFailureListener {
-                                liveDataStatus.mutable.value = it.localizedMessage?.let { message ->
-                                    liveDataStatus.mutable.value = Resource.loading(false)
+                                liveDataResult.mutable.value = it.localizedMessage?.let { message ->
+                                    liveDataResult.mutable.value = Resource.loading(false)
                                     Resource.error("Fotoğraf url alınamadı.\nHata: $message", null)
                                 }
                             }
                     }.addOnFailureListener {
-                        liveDataStatus.mutable.value = it.localizedMessage?.let { message ->
-                            liveDataStatus.mutable.value = Resource.loading(false)
+                        liveDataResult.mutable.value = it.localizedMessage?.let { message ->
+                            liveDataResult.mutable.value = Resource.loading(false)
                             Resource.error("Fotoğraf yüklenemedi.\nHata: $message", null)
                         }
                     }
             } ?: run {
                 if (images.size > 0) {
                     val image = images[0]
-                    liveDataStatus.mutable.value = Resource.loading(true)
+                    liveDataResult.mutable.value = Resource.loading(true)
                     firestoreRepo.addPetImage(petId, userId, image)
                         .addOnSuccessListener { task ->
                             task.storage.downloadUrl
@@ -82,9 +82,9 @@ constructor(
                                         uploadedImages
                                     )
                                 }.addOnFailureListener {
-                                    liveDataStatus.mutable.value =
+                                    liveDataResult.mutable.value =
                                         it.localizedMessage?.let { message ->
-                                            liveDataStatus.mutable.value = Resource.loading(false)
+                                            liveDataResult.mutable.value = Resource.loading(false)
                                             Resource.error(
                                                 "Fotoğraf url alınamadı.\nHata: $message",
                                                 null
@@ -92,8 +92,8 @@ constructor(
                                         }
                                 }
                         }.addOnFailureListener {
-                            liveDataStatus.mutable.value = it.localizedMessage?.let { message ->
-                                liveDataStatus.mutable.value = Resource.loading(false)
+                            liveDataResult.mutable.value = it.localizedMessage?.let { message ->
+                                liveDataResult.mutable.value = Resource.loading(false)
                                 Resource.error("Fotoğraf yüklenemedi.\nHata: $message", null)
                             }
                         }
@@ -108,14 +108,14 @@ constructor(
     }
 
     private fun updatePetToFirestore(petId: String, petModel: Pet) {
-        liveDataStatus.mutable.value = Resource.loading(true)
+        liveDataResult.mutable.value = Resource.loading(true)
         firestoreRepo.addPetToFirestore(petId, petModel)
             .addOnCompleteListener { task ->
-                liveDataStatus.mutable.value = Resource.loading(false)
+                liveDataResult.mutable.value = Resource.loading(false)
                 if (task.isSuccessful) {
-                    liveDataStatus.mutable.value = Resource.success(true)
+                    liveDataResult.mutable.value = Resource.success(true)
                 } else {
-                    liveDataStatus.mutable.value =
+                    liveDataResult.mutable.value =
                         task.exception?.localizedMessage?.let { message ->
                             Resource.error(message, false)
                         }

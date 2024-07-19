@@ -19,6 +19,8 @@ data class Pet(
     var allergies: String? = null, // Hayvanın alerjileri
     var ownerId: String? = null // Hayvanın sahibinin kimliği
     //TODO: ilanı veren kişi kaç yavru istiyor kısmı eklenebilir
+    //TODO: evcil hayvanların doğum tarihlerini al
+    //TODO: doğum tarihinden yaşı hesapla
 ) : Serializable
 
 enum class Genus {

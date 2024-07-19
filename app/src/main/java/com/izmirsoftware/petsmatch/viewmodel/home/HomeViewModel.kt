@@ -2,21 +2,21 @@ package com.izmirsoftware.petsmatch.viewmodel.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.izmirsoftware.petsmatch.model.Comments
+import com.izmirsoftware.petsmatch.model.Comment
 import com.izmirsoftware.petsmatch.model.Location
 import com.izmirsoftware.petsmatch.model.Owner
 import com.izmirsoftware.petsmatch.model.Pet
 import com.izmirsoftware.petsmatch.model.PetCardModel
 import com.izmirsoftware.petsmatch.model.PetPost
 import com.izmirsoftware.petsmatch.viewmodel.BaseViewModel
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 
 class HomeViewModel
 @Inject
 constructor(
 
-): BaseViewModel() {
+) : BaseViewModel() {
     val petCardModel: LiveData<List<PetCardModel>> = MutableLiveData()
 
     fun createPetCardModels() {
@@ -33,10 +33,17 @@ constructor(
         val pet = Pet()
         pet.profileImage = "https://cdn1.ntv.com.tr/gorsel/xXM8GccvjkmZxggiDVHP5g.jpg"
 
-        val owner = Owner()
-        owner.comments = listOf(
-            Comments(
-                rating = 4.8
+        val owner = Owner(
+            comments = listOf(
+                Comment(
+                    rating = 4.8
+                ),
+                Comment(
+                    rating = 4.0
+                ),
+                Comment(
+                    rating = 3.5
+                )
             )
         )
 

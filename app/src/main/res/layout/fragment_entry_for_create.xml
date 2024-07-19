@@ -5,7 +5,13 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <import type="androidx.navigation.Navigation" />
+
+        <variable
+            name="setProgressBar"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +36,6 @@
             android:id="@+id/dividerToolbar"
             android:layout_width="0dp"
             android:layout_height="2dp"
-            app:layout_constraintBottom_toTopOf="@id/rvEntryCreate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
@@ -41,6 +46,7 @@
             android:layout_height="0dp"
             android:orientation="vertical"
             android:padding="4dp"
+            android:visibility="@{setProgressBar == true ? View.GONE : View.VISIBLE}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -74,5 +80,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:maxImageSize="30dp"
             tools:ignore="ContentDescription,KeyboardInaccessibleWidget,SpeakableTextPresentCheck" />
+
+        <ProgressBar
+            android:visibility="@{setProgressBar == false ? View.GONE : View.VISIBLE}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

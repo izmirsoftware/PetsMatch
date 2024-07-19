@@ -1,16 +1,22 @@
 package com.izmirsoftware.petsmatch.view.home
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
+import com.izmirsoftware.petsmatch.R
 import com.izmirsoftware.petsmatch.adapter.AdapterPetCard
 import com.izmirsoftware.petsmatch.databinding.FragmentEntryForCreateBinding
 import com.izmirsoftware.petsmatch.model.Pet
+import com.izmirsoftware.petsmatch.util.Status
 import com.izmirsoftware.petsmatch.util.hideBottomNavigation
+import com.izmirsoftware.petsmatch.util.setupDialogs
 import com.izmirsoftware.petsmatch.util.showBottomNavigation
 import com.izmirsoftware.petsmatch.viewmodel.home.EntryForCreateViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,9 +27,20 @@ class EntryForCreateFragment : Fragment() {
     private var _binding: FragmentEntryForCreateBinding? = null
     private val binding get() = _binding!!
 
+    private val userId = FirebaseAuth.getInstance().currentUser?.uid
+
     private val adapter: AdapterPetCard by lazy {
-        //TODO: Hayvanlar için farklı adapter ve görünüm oluştur
         AdapterPetCard()
+    }
+
+    private val errorDialog: AlertDialog by lazy { AlertDialog.Builder(requireContext()).create() }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        userId?.let { id ->
+            viewModel.getPetsByUserId(id)
+        }
     }
 
     override fun onCreateView(
@@ -36,8 +53,39 @@ class EntryForCreateFragment : Fragment() {
         binding.rvEntryCreate.adapter = adapter
 
         setOnClickItems()
+        observeLiveData(viewLifecycleOwner)
 
         return root
+    }
+
+    private fun observeLiveData(owner: LifecycleOwner) {
+        with(viewModel) {
+            liveDataResult.observe(owner) {
+                when (it.status) {
+                    Status.SUCCESS -> {}
+                    Status.LOADING -> {
+                        binding.setProgressBar = it.data
+                    }
+
+                    Status.ERROR -> {
+                        setupDialogs(errorDialog)
+                        errorDialog.setMessage(buildString {
+                            append(R.string.error_message)
+                            append("\n")
+                            append(it.message)
+                        })
+                        errorDialog.show()
+                    }
+                }
+            }
+
+            liveDataPets.observe(owner) { dbPetList ->
+                adapter.petList = dbPetList.toList()
+                if (dbPetList.isNotEmpty()) {
+                    binding.textEntryCreateEmptyMessage.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun setOnClickItems() {

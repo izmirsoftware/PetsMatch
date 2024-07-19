@@ -12,7 +12,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.izmirsoftware.petsmatch.R
-import com.izmirsoftware.petsmatch.adapter.AdapterPetCard
+import com.izmirsoftware.petsmatch.adapter.AdapterPostCard
 import com.izmirsoftware.petsmatch.databinding.FragmentHomeBinding
 import com.izmirsoftware.petsmatch.util.Status
 import com.izmirsoftware.petsmatch.util.setupDialogs
@@ -28,8 +28,8 @@ class HomeFragment : Fragment() {
 
     private val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-    private val adapter: AdapterPetCard by lazy {
-        AdapterPetCard()
+    private val adapter: AdapterPostCard by lazy {
+        AdapterPostCard()
     }
 
     private val errorDialog: AlertDialog by lazy {
@@ -57,7 +57,7 @@ class HomeFragment : Fragment() {
 
     private fun observeLiveData(owner: LifecycleOwner) {
         with(viewModel) {
-            liveDataStatus.observe(owner) {
+            liveDataResult.observe(owner) {
                 when (it.status) {
                     Status.SUCCESS -> {}
 

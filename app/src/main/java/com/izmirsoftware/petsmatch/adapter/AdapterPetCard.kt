@@ -1,6 +1,7 @@
 package com.izmirsoftware.petsmatch.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -9,6 +10,8 @@ import com.izmirsoftware.petsmatch.databinding.CardPetItemBinding
 import com.izmirsoftware.petsmatch.model.Pet
 
 class AdapterPetCard : RecyclerView.Adapter<AdapterPetCard.ViewHolder>() {
+    lateinit var onClickCardListener: ((String, View) -> Unit)
+
     private val diffUtil = object : DiffUtil.ItemCallback<Pet>() {
         override fun areItemsTheSame(oldItem: Pet, newItem: Pet): Boolean {
             return oldItem.id == newItem.id
@@ -28,7 +31,12 @@ class AdapterPetCard : RecyclerView.Adapter<AdapterPetCard.ViewHolder>() {
         get() = asyncListDiffer.currentList
         set(value) = asyncListDiffer.submitList(value)
 
-    inner class ViewHolder(val binding: CardPetItemBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: CardPetItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun onClickCard(petId: String, view: View) {
+            onClickCardListener.invoke(petId, view)
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = CardPetItemBinding.inflate(
@@ -44,8 +52,15 @@ class AdapterPetCard : RecyclerView.Adapter<AdapterPetCard.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.viewPet = petList[position]
-        //TODO: evcil hayvanların doğum tarihlerini al
-        //TODO: doğum tarihinden yaşı hesapla
+        val pet = petList[position]
+        with(holder) {
+            binding.viewPet = pet
+
+            pet.id?.let { id ->
+                itemView.setOnClickListener { v ->
+                    onClickCard(id, v)
+                }
+            }
+        }
     }
 }

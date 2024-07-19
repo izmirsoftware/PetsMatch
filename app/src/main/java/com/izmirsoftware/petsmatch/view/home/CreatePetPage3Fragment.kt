@@ -97,7 +97,7 @@ class CreatePetPage3Fragment : Fragment() {
 
     private fun observeLiveData(owner: LifecycleOwner) {
         with(viewModel) {
-            liveDataStatus.observe(owner) {
+            liveDataResult.observe(owner) {
                 when (it.status) {
                     Status.SUCCESS -> {
                         it.data?.let { status ->

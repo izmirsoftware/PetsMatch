@@ -201,7 +201,6 @@ class CreatePetPage3Fragment : Fragment() {
         }
     }
 
-    //TODO: profil resmi seçmek için ayrı intent oluştur
     private fun openProfileImagePicker() {
         val imageIntent = Intent(
             Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI

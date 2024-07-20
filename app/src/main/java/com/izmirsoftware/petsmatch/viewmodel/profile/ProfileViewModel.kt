@@ -69,6 +69,11 @@ constructor(
                 _userInfoMessage.value = Resource.error("Belge alınamadı. Hata: $exception", null)
             }
     }
+
+    fun logout() {
+        auth.signOut()
+    }
+
     val petCardModel = MutableLiveData<List<PetCardModel>>()
 
     fun createPetCardModels() {

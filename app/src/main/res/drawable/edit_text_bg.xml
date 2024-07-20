@@ -6,7 +6,7 @@
         android:color="@color/translucent_border_color" />
     <gradient
         android:startColor="@color/white"
-        android:endColor="@color/gradient_finish_color"
+        android:endColor="@color/white"
         android:angle="0" />
     <corners android:radius="5dp" />
 </shape>

@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import com.izmirsoftware.petsmatch.R
 import com.izmirsoftware.petsmatch.adapter.AdapterPostCard
 import com.izmirsoftware.petsmatch.databinding.FragmentProfileBinding
 import com.izmirsoftware.petsmatch.util.Status
@@ -41,6 +43,13 @@ class ProfileFragment : Fragment() {
         progressDialog = ProgressDialog(requireContext())
         binding.ivUserImage.setOnClickListener {
             goToEditProfileDetails(it)
+        }
+
+        // FIXME: test amaçlı eklendi
+        binding.ivUserImage.setOnLongClickListener {
+            viewModel.logout()
+            gotoMainFragment(it)
+            true
         }
     }
 
@@ -84,7 +93,12 @@ class ProfileFragment : Fragment() {
             adapter.petCardList = it.toList()
         }
     }
-    private fun goToEditProfileDetails(view : View){
+
+    private fun gotoMainFragment(view: View) {
+        view.findNavController().navigate(R.id.action_global_navigation_home)
+    }
+
+    private fun goToEditProfileDetails(view: View) {
         val action = ProfileFragmentDirections.actionNavigationProfileToEditProfileFragment()
         Navigation.findNavController(view).navigate(action)
     }

@@ -11,7 +11,12 @@ data class Owner(
     var phone: String? = null, // Hayvan sahibinin telefonu
     var email: String? = null, // Hayvan sahibinin e-posta adresi
     var profileImage: String? = null, // Hayvan sahibinin profil resmi
-    var comments: List<Comment>? = null // Hayvan sahibi için yapılan yorumlar ve Puanlar
+    var pets: List<Pet>? = null, // Hayvan sahibinin sisteme eklenmiş hayvanları
+    var posts: List<PetPost>? = null, // Hayvan sahibinin sisteme eklenmiş ilanları
+    var comments: List<Comment>? = null, // Hayvan sahibi için yapılan yorumlar ve Puanlar
+    var address: String? = null, // Hayvan sahibinin adresi
+    var bio: String? = null, // Hayvan sahibi hakkında bilgiler
+    var token: String? = null
 ) {
     var averageRating = "0.0"
 

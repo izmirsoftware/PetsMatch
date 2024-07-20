@@ -3,4 +3,17 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="toolbar_icon">#FF000000</color>
+
+
+    <!-- TextColors Colors-->
+    <color name="normal_text_color">#000000</color>
+    <color name="gray_text_color">#808080</color>
+    <color name="gradient_start_color">#FFFFFF</color>
+    <color name="gradient_finish_color">#560B63</color>
+
+    <!-- Button Colors-->
+    <color name="main_button_gb_color">#9e40dc</color>
+    <color name="secondary_button_gb_color">#c55551</color>
+    <color name="translucent_border_color">#80000000</color>
+
 </resources>

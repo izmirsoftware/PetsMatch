@@ -18,7 +18,6 @@ import com.google.android.gms.common.api.ApiException
 import com.izmirsoftware.petsmatch.databinding.FragmentLoginBinding
 import com.izmirsoftware.petsmatch.util.Status
 import com.izmirsoftware.petsmatch.util.startLoadingProcess
-import com.izmirsoftware.petsmatch.view.MainActivity
 import com.izmirsoftware.petsmatch.viewmodel.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -82,7 +81,7 @@ class LoginFragment : Fragment() {
         */
 
         with(binding) {
-            btnLogin.setOnClickListener {
+            btnSignIn.setOnClickListener {
                 val email = etEmail.text.toString()
                 val password = etPassword.text.toString()
                 if (email.isNotEmpty() && password.length > 5) {
@@ -116,6 +115,7 @@ class LoginFragment : Fragment() {
             val action = LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
             findNavController().navigate(action)
         }
+
     }
 
     override fun onStart() {

@@ -32,4 +32,25 @@
     <string name="goto_login_message">Yeni ilan oluşturmak ve evcil hayvanlarınızı kaydetmek için giriş yapmalısınız.\nGiriş sayfasına gitmek ister misiniz?</string>
     <string name="yes">Evet</string>
     <string name="no">Hayır</string>
+
+    //Entry
+    //Login
+    <string name="welcome_title">Hoşgeldiniz!</string>
+    <string name="welcome_description">PetsMatch, evcil hayvan sahipleri ve evlat edinmek isteyenler için bir eşleştirme platformudur.</string>
+    <string name="email_hint">E-posta</string>
+    <string name="password_hint">Şifre</string>
+    <string name="forgot_password">Şifrenizi mi unuttunuz?</string>
+    <string name="sign_in">Giriş Yap</string>
+    <string name="go_to_register">Hesabın yok mu? Kayıt Ol</string>
+    <string name="register">Kayıt Ol</string>
+
+    //Register
+    <string name="register_title">Hemen Kayıt Ol!</string>
+    <string name="register_description">Evcil hayvan sahipleriyle bağlantı kurmak veya yeni bir arkadaş bulmak için PetsMatche katılın.</string>
+    <string name="full_name_hint">Tam Ad</string>
+    <string name="confirm_password_hint">Şifreyi Onayla</string>
+    <string name="login_methods">Veya bu yöntemleri deneyin</string>
+    <string name="go_to_login">Zaten hesabın var mı? </string>
+    <string name="login">Giriş Yap</string>
+
 </resources>

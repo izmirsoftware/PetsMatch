@@ -72,9 +72,11 @@ class RegisterFragment : Fragment() {
         binding.btnGoogle.setOnClickListener {
             googleSignIn()
         }*/
+      /*
         binding.tvGoToLogin.setOnClickListener {
             findNavController().popBackStack()
         }
+       */
 
         binding.btnRegister.setOnClickListener {
             val name = binding.etFullName.text.toString()
@@ -83,6 +85,9 @@ class RegisterFragment : Fragment() {
             val confirmPassword = binding.etConfirmPassword.text.toString()
 
             viewModel.signUp(name,email, password, confirmPassword)
+        }
+        binding.tvGOtoLogin.setOnClickListener {
+            findNavController().popBackStack()
         }
 
         setupDialogs()

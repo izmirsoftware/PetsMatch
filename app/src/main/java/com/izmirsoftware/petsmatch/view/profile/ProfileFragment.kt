@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.izmirsoftware.petsmatch.R
+import com.izmirsoftware.petsmatch.adapter.AdapterPetCard
 import com.izmirsoftware.petsmatch.databinding.FragmentProfileBinding
 import com.izmirsoftware.petsmatch.util.Status
 import com.izmirsoftware.petsmatch.viewmodel.profile.ProfileViewModel
@@ -26,11 +27,15 @@ class ProfileFragment : Fragment() {
 
     private var progressDialog: ProgressDialog? = null
 
+    private val adapter = AdapterPetCard()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        viewModel.createPetCardModels()
+        binding.rvProfile.adapter = adapter
         return binding.root
     }
 
@@ -78,6 +83,9 @@ class ProfileFragment : Fragment() {
                 }
             }
         })
+        viewModel.petCardModel.observe(viewLifecycleOwner) {
+            adapter.petCardList = it.toList()
+        }
     }
     private fun goToEditProfileDetails(view : View){
         val action = ProfileFragmentDirections.actionNavigationProfileToEditProfileFragment()

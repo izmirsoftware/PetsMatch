@@ -32,4 +32,24 @@
     <string name="goto_login_message">You must log in to create a new ad and register your pets.\nWould you like to go to the login page?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+
+    //Entry
+    //Login
+    <string name="welcome_title">Welcome!</string>
+    <string name="welcome_description">PetsMatch is a matching platform for pet owners and those looking to adopt.</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="go_to_register">Do not have an account? </string>
+    <string name="register">Sign Up</string>
+
+    //Register
+    <string name="register_title">Register Now!</string>
+    <string name="register_description">Join PetsMatch to connect with pet owners or find a new companion</string>
+    <string name="full_name_hint">Full Name</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="login_methods">Or try these methods</string>
+    <string name="go_to_login">Already have an account? </string>
+    <string name="login">Sign In</string>
 </resources>

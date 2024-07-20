@@ -10,12 +10,15 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.izmirsoftware.petsmatch.model.Pet
+import com.izmirsoftware.petsmatch.model.PetPost
 import com.izmirsoftware.petsmatch.model.UserModel
 import java.util.UUID
 import javax.inject.Inject
 
 
-class FirebaseRepoImpl @Inject constructor(
+class FirebaseRepoImpl
+@Inject
+constructor(
     private val auth: FirebaseAuth,
     firestore: FirebaseFirestore,
     private val storage: FirebaseStorage,
@@ -26,6 +29,7 @@ class FirebaseRepoImpl @Inject constructor(
     private val userCollection = firestore.collection("users")
     private val notificationCollection = firestore.collection("notifications")
     private val petCollection = firestore.collection("pets")
+    private val postCollection = firestore.collection("posts")
     private val reviewCollection = firestore.collection("reviews")
 
     //StorageRef
@@ -64,13 +68,17 @@ class FirebaseRepoImpl @Inject constructor(
         return userCollection.document(userId).update(updateData)
     }
 
-    // Firestore - Vila
+    // Firestore - Pet
     override fun addPetToFirestore(petId: String, pet: Pet): Task<Void> {
         return petCollection.document(petId).set(pet)
     }
 
     override fun deletePetFromFirestore(petId: String): Task<Void> {
         return petCollection.document(petId).delete()
+    }
+
+    override fun getAllPetsFromFirestore(): Task<QuerySnapshot> {
+        return petCollection.get()
     }
 
     override fun getAllPetsFromFirestore(limit: Long): Task<QuerySnapshot> {
@@ -85,11 +93,50 @@ class FirebaseRepoImpl @Inject constructor(
         return petCollection.whereEqualTo("ownerId", userId).get()
     }
 
+    // Firestore - PetPost
+    override fun addPostToFirestore(postId: String, post: PetPost): Task<Void> {
+        return postCollection.document(postId).set(post)
+    }
+
+    override fun deletePostFromFirestore(postId: String): Task<Void> {
+        return postCollection.document(postId).delete()
+    }
+
+    override fun getAllPostsFromFirestore(): Task<QuerySnapshot> {
+        return postCollection.get()
+    }
+
+    override fun getAllPostsFromFirestore(limit: Long): Task<QuerySnapshot> {
+        return postCollection.limit(limit).get()
+    }
+
+    override fun getPostByIdFromFirestore(postId: String): Task<DocumentSnapshot> {
+        return postCollection.document(postId).get()
+    }
+
     // Storage - User
     override fun uploadUserProfilePhoto(uri: Uri, userId: String, key: String): UploadTask {
         return imagesParentRef.child("userId_$userId")
             .child("images")
             .child("profile_photo.jpg")
             .putFile(uri)
+    }
+
+    //Storege - Pet
+    override fun addPetImage(
+        petId: String,
+        userId: String,
+        image: ByteArray,
+    ): UploadTask {
+        return imagesParentRef
+            .child("userId_$userId")
+            .child("images")
+            .child("jobId_$petId")
+            .child("${UUID.randomUUID()}.jpg")
+            .putBytes(image)
+    }
+
+    override fun deletePetImage(url: String): Task<Void> {
+        return storage.getReferenceFromUrl(url).delete()
     }
 }

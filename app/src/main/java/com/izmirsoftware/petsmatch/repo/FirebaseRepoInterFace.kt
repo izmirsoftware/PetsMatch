@@ -7,6 +7,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.UploadTask
 import com.izmirsoftware.petsmatch.model.Pet
+import com.izmirsoftware.petsmatch.model.PetPost
 import com.izmirsoftware.petsmatch.model.UserModel
 
 interface FirebaseRepoInterFace {
@@ -26,10 +27,17 @@ interface FirebaseRepoInterFace {
     //Firestore - Pet
     fun addPetToFirestore(petId: String, pet: Pet): Task<Void>
     fun deletePetFromFirestore(petId: String): Task<Void>
+    fun getAllPetsFromFirestore(): Task<QuerySnapshot>
     fun getAllPetsFromFirestore(limit: Long): Task<QuerySnapshot>
     fun getPetByIdFromFirestore(petId: String): Task<DocumentSnapshot>
     fun getPetsByUserId(userId: String): Task<QuerySnapshot>
 
+    //Firestore - PetPost
+    fun addPostToFirestore(postId: String, post: PetPost): Task<Void>
+    fun deletePostFromFirestore(postId: String): Task<Void>
+    fun getAllPostsFromFirestore(): Task<QuerySnapshot>
+    fun getAllPostsFromFirestore(limit: Long): Task<QuerySnapshot>
+    fun getPostByIdFromFirestore(postId: String): Task<DocumentSnapshot>
 
     //Firebase Storage
     fun uploadUserProfilePhoto(
@@ -37,4 +45,12 @@ interface FirebaseRepoInterFace {
         userId: String,
         key: String,
     ): UploadTask
+
+    //Storege - Pet
+    fun addPetImage(
+        petId: String,
+        userId: String,
+        image: ByteArray,
+    ): UploadTask
+    fun deletePetImage(url: String): Task<Void>
 }

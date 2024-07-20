@@ -9,7 +9,7 @@ open class BaseViewModel : ViewModel() {
     protected val <T> LiveData<T>.mutable: MutableLiveData<T>
         get() = this as MutableLiveData<T>
 
-    val liveDataStatus: LiveData<Resource<Boolean>> = MutableLiveData()
+    val liveDataResult: LiveData<Resource<Boolean>> = MutableLiveData()
 
     fun myFun(){
 

@@ -86,6 +86,9 @@ class RegisterFragment : Fragment() {
 
             viewModel.signUp(name,email, password, confirmPassword)
         }
+        binding.tvGOtoLogin.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         setupDialogs()
         observeLiveData()

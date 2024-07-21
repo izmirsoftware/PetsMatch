@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
-import com.izmirsoftware.petsmatch.model.Comments
+import com.izmirsoftware.petsmatch.model.Comment
 import com.izmirsoftware.petsmatch.model.Location
 import com.izmirsoftware.petsmatch.model.Owner
 import com.izmirsoftware.petsmatch.model.Pet
@@ -69,6 +69,11 @@ constructor(
                 _userInfoMessage.value = Resource.error("Belge alınamadı. Hata: $exception", null)
             }
     }
+
+    fun logout() {
+        auth.signOut()
+    }
+
     val petCardModel = MutableLiveData<List<PetCardModel>>()
 
     fun createPetCardModels() {
@@ -87,7 +92,7 @@ constructor(
 
         val owner = Owner()
         owner.comments = listOf(
-            Comments(
+            Comment(
                 rating = 4.8
             )
         )

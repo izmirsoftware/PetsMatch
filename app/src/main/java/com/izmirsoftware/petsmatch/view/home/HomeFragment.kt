@@ -26,7 +26,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val userId = FirebaseAuth.getInstance().currentUser?.uid
+    private var firebaseUser = FirebaseAuth.getInstance().currentUser
 
     private val adapter: AdapterPostCard by lazy {
         AdapterPostCard()
@@ -34,6 +34,13 @@ class HomeFragment : Fragment() {
 
     private val errorDialog: AlertDialog by lazy {
         AlertDialog.Builder(requireContext()).create()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (firebaseUser == null) {
+            viewModel.signInAnonymously()
+        }
     }
 
     override fun onCreateView(
@@ -70,8 +77,12 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
-            petCardModel.observe(owner) {
+            liveDataPetCardModels.observe(owner) {
                 adapter.petCardList = it.toList()
+            }
+
+            liveDataFirebaseUser.observe(owner) {
+                firebaseUser = it
             }
         }
     }
@@ -79,8 +90,12 @@ class HomeFragment : Fragment() {
     private fun setOnClickItems() {
         with(binding) {
             fab.setOnClickListener {
-                userId?.let {
-                    gotoEntryForCreateFragment()
+                firebaseUser?.let { user ->
+                    if (user.isAnonymous) {
+                        showLoginMessage()
+                    } else {
+                        gotoEntryForCreateFragment()
+                    }
                 } ?: run {
                     showLoginMessage()
                 }
@@ -97,6 +112,7 @@ class HomeFragment : Fragment() {
                 AlertDialog.BUTTON_POSITIVE, resources.getString(R.string.yes)
             ) { dialog, _ ->
                 gotoLoginActivity()
+                viewModel.logout()
                 dialog.cancel()
             }
             setButton(

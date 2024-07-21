@@ -119,4 +119,9 @@
         android:id="@+id/editProfileFragment"
         tools:layout="@layout/fragment_edit_profile"
         android:name="com.izmirsoftware.petsmatch.view.profile.EditProfileFragment" />
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.izmirsoftware.petsmatch.view.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
 </navigation>

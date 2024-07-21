@@ -7,6 +7,11 @@
         android:title="Ana Sayfa" />
 
     <item
+        android:id="@+id/nqvigation_search"
+        android:icon="@drawable/search"
+        android:title="Ara" />
+
+    <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/profile"
         android:title="Profil" />

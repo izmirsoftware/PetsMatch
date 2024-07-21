@@ -6,6 +6,10 @@
     <data>
 
         <import type="androidx.navigation.Navigation" />
+
+        <variable
+            name="viewPetModel"
+            type="com.izmirsoftware.petsmatch.model.Pet" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -62,6 +66,7 @@
                     app:endIconMode="dropdown_menu">
 
                     <AutoCompleteTextView
+                        android:id="@+id/edittextDuringEstrus"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -77,9 +82,12 @@
                     android:layout_marginTop="10dp">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edittextPersonality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/create_pet_personality" />
+                        android:hint="@string/create_pet_personality"
+                        android:text="@{viewPetModel.personality}"
+                        tools:ignore="TextContrastCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -88,9 +96,12 @@
                     android:layout_marginTop="10dp">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edittextAreasInterest"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/create_pet_interests" />
+                        android:hint="@string/create_pet_interests"
+                        android:text="@{viewPetModel.interests}"
+                        tools:ignore="TextContrastCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -100,6 +111,7 @@
                     app:endIconMode="dropdown_menu">
 
                     <AutoCompleteTextView
+                        android:id="@+id/edittextVaccinated"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -114,18 +126,22 @@
                     android:layout_marginTop="10dp">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edittextAllergies"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/create_pet_allergies" />
+                        android:hint="@string/create_pet_allergies"
+                        android:text="@{viewPetModel.allergies}"
+                        tools:ignore="TextContrastCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/bottomLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -135,14 +151,10 @@
                 android:id="@+id/buttonNextPage"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
                 android:text="@string/next_page"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:textSize="16sp" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

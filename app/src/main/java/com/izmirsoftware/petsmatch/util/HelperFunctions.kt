@@ -49,7 +49,20 @@ fun getCurrentTime(): String {
     return dateFormat.format(date)
 }
 
-fun getCurrentDate(): String {
+fun getCurrentDateAsString(): String {
     val currentDate = Calendar.getInstance().time
     return SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(currentDate)
+}
+
+fun getCurrentDate(): Date {
+    val date = Calendar.getInstance()
+    val year = date.get(Calendar.YEAR)
+    val month = date.get(Calendar.MONTH)
+    val day = date.get(Calendar.DATE)
+
+    date.set(year, month, day, 0, 0)
+
+    val millis = date.timeInMillis
+
+    return Date(millis)
 }

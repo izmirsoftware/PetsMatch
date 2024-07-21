@@ -18,14 +18,14 @@ import com.google.android.gms.common.api.ApiException
 import com.izmirsoftware.petsmatch.databinding.FragmentLoginBinding
 import com.izmirsoftware.petsmatch.util.Status
 import com.izmirsoftware.petsmatch.util.startLoadingProcess
-import com.izmirsoftware.petsmatch.viewmodel.BaseViewModel
+import com.izmirsoftware.petsmatch.view.MainActivity
 import com.izmirsoftware.petsmatch.viewmodel.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
 
-    private val loginViewModel : LoginViewModel by viewModels()
+    private val loginViewModel: LoginViewModel by viewModels()
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
@@ -70,16 +70,16 @@ class LoginFragment : Fragment() {
         setProgressBar(false)
         setupDialogs()
 
-/*
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.web_client_id))
-            .requestEmail().build()
+        /*
+                val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.web_client_id))
+                    .requestEmail().build()
 
-        mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-        binding.layoutGoogle.setOnClickListener {
-           // googleSignIn()
-        }
-*/
+                mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+                binding.layoutGoogle.setOnClickListener {
+                   // googleSignIn()
+                }
+        */
 
         with(binding) {
             btnSignIn.setOnClickListener {
@@ -87,7 +87,7 @@ class LoginFragment : Fragment() {
                 val password = etPassword.text.toString()
                 if (email.isNotEmpty() && password.length > 5) {
                     println("1")
-                    loginViewModel.login(email,password)
+                    loginViewModel.login(email, password)
                 } else if (email.isEmpty()) {
                     println("e")
                     etEmail.error = "Please enter an email address"
@@ -153,10 +153,12 @@ class LoginFragment : Fragment() {
                         setProgressBar(state)
                         startLoadingProcess(progressDialog)
                     }
+
                     Status.SUCCESS -> {
                         verifyEmail()
                         progressDialog?.dismiss()
                     }
+
                     Status.ERROR -> {
                         progressDialog?.dismiss()
                         errorDialog.setMessage("Login error.\n${it.message}")
@@ -171,6 +173,7 @@ class LoginFragment : Fragment() {
                     Status.SUCCESS -> {
                         forgotPasswordSuccessDialog.show()
                     }
+
                     Status.ERROR -> {
                         forgotPasswordDialog.setMessage("Password reset error.\n${it.message}")
                     }
@@ -183,6 +186,7 @@ class LoginFragment : Fragment() {
                     Status.SUCCESS -> {
                         verificationEmailSentDialog.show()
                     }
+
                     Status.ERROR -> {
                         verificationEmailSentErrorDialog.show()
                     }

@@ -13,7 +13,7 @@
     <string name="create_pet_color">Hayvanın rengi</string>
     <string name="create_pet_during_estrus">Kızgılık döneminde mi?</string>
     <string name="create_pet_vaccinations">Aşıları tam mi?</string>
-    <string name="create_pet_allergies">Varsa alerjilerini ekleyin.</string>
+    <string name="create_pet_allergies">Varsa alerjilerini ekleyin</string>
     <string name="create_pet_personality">Kişilik tanımı</string>
     <string name="create_pet_interests">İlgi alanları</string>
     <string name="next_page">Sonraki Sayfa</string>
@@ -22,9 +22,16 @@
     <string name="save">Kaydet</string>
     <string name="title_create_post">Evcil Hayvan İlanı Oluştur</string>
     <string name="error_text">Hata : Tekrar Deneyin</string>
-
-
-
+    <string name="add_pet_profile_image">Profil Resmi</string>
+    <string name="add_pet_other_image">Resim Ekleyin</string>
+    <string name="open_gallery">Galeriyi aç</string>
+    <string name="open_camera">Kamerayı aç</string>
+    <string name="image_source">Resim Kaynağı</string>
+    <string name="error_message">Hata mesajı:</string>
+    <string name="add_other_images_message">Daha fazla resim eklemek için aşağıdaki butonu kullanabilirsiniz.</string>
+    <string name="goto_login_message">Yeni ilan oluşturmak ve evcil hayvanlarınızı kaydetmek için giriş yapmalısınız.\nGiriş sayfasına gitmek ister misiniz?</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
 
     //Entry
     //Login

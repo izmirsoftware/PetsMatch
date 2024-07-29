@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Pets Match</string>
     <string name="create_title">Pet Create</string>
     <string name="create_subtitle_13">Page 1&#47;3</string>
@@ -33,8 +33,15 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
-    //Entry
-    //Login
+    <!-- Search -->
+    <string name="search_no_results">No results found</string>
+    <string name="search_placeholder">Search...</string>
+    <string name="filter">Filter</string>
+    <string name="clear_search">Clear search</string>
+    <string name="search_results">Search results</string>
+
+    <!-- Entry -->
+    <!-- Login -->
     <string name="welcome_title">Welcome!</string>
     <string name="welcome_description">PetsMatch is a matching platform for pet owners and those looking to adopt.</string>
     <string name="email_hint">Email</string>
@@ -44,7 +51,7 @@
     <string name="go_to_register">Do not have an account? </string>
     <string name="register">Sign Up</string>
 
-    //Register
+    <!-- Register -->
     <string name="register_title">Register Now!</string>
     <string name="register_description">Join PetsMatch to connect with pet owners or find a new companion</string>
     <string name="full_name_hint">Full Name</string>
@@ -52,4 +59,13 @@
     <string name="login_methods">Or try these methods</string>
     <string name="go_to_login">Already have an account? </string>
     <string name="login">Sign In</string>
+
+    <!-- Home -->
+    <string name="dogs">Dogs</string>
+    <string name="cats">Cats</string>
+    <string name="others">Other pets</string>
+    <string name="popular_cats">Popular Cats</string>
+    <string name="popular_dogs">Popular Dogs</string>
+    <string name="years_old">Years Old</string>
+
 </resources>

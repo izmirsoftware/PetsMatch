@@ -49,8 +49,8 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        viewModel.createPetCardModels()
-        binding.rvHome.adapter = adapter
+        binding.rvPopularDogs.adapter = adapter
+        binding.rvPopularCats.adapter = adapter
 
         setOnClickItems()
 
@@ -59,9 +59,13 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeLiveData(viewLifecycleOwner)
+
     }
 
+    override fun onResume() {
+        super.onResume()
+        observeLiveData(viewLifecycleOwner)
+    }
     private fun observeLiveData(owner: LifecycleOwner) {
         with(viewModel) {
             liveDataResult.observe(owner) {
@@ -77,8 +81,10 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
-            liveDataPetCardModels.observe(owner) {
-                adapter.petCardList = it.toList()
+            petPostList.observe(owner) {petPosts->
+                if (petPosts != null) {
+                    adapter.petPostList = petPosts
+                }
             }
 
             liveDataFirebaseUser.observe(owner) {
@@ -140,10 +146,8 @@ class HomeFragment : Fragment() {
     private fun setProgressBar(status: Boolean) {
         with(binding) {
             if (status) {
-                rvHome.visibility = View.GONE
                 progressBar.visibility = View.VISIBLE
             } else {
-                rvHome.visibility = View.VISIBLE
                 progressBar.visibility = View.GONE
             }
         }

@@ -17,7 +17,8 @@ data class Pet(
     var interests: String? = null, // Hayvanın ilgi alanları
     var vaccinations: Boolean? = null, // Hayvanın aşıları tam mı?
     var allergies: String? = null, // Hayvanın alerjileri
-    var ownerId: String? = null // Hayvanın sahibinin kimliği
+    var ownerId: String? = null, // Hayvanın sahibinin kimliği
+    var description: String? = null // Hayvan sahibinin yazdığı açıklama
     //TODO: ilanı veren kişi kaç yavru istiyor kısmı eklenebilir
     //TODO: evcil hayvanların doğum tarihlerini al
     //TODO: doğum tarihinden yaşı hesapla

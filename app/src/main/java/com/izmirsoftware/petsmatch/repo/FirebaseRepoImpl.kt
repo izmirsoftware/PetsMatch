@@ -6,12 +6,14 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.izmirsoftware.petsmatch.model.Pet
 import com.izmirsoftware.petsmatch.model.PetPost
 import com.izmirsoftware.petsmatch.model.UserModel
+import com.izmirsoftware.petsmatch.util.PetType
 import java.util.UUID
 import javax.inject.Inject
 
@@ -113,6 +115,9 @@ constructor(
     override fun getPostByIdFromFirestore(postId: String): Task<DocumentSnapshot> {
         return postCollection.document(postId).get()
     }
+    override fun getPetPostsByPetType(type: PetType, limit : Long): Task<QuerySnapshot> {
+        return postCollection.whereEqualTo("type", type).get()
+    }
 
     // Storage - User
     override fun uploadUserProfilePhoto(uri: Uri, userId: String, key: String): UploadTask {
@@ -139,4 +144,38 @@ constructor(
     override fun deletePetImage(url: String): Task<Void> {
         return storage.getReferenceFromUrl(url).delete()
     }
+
+    override fun getFilteredPosts(
+        genus: String?,
+        gender: String?,
+        age: String?,
+        breed: String?,
+        color: String?,
+        limit: Long
+    ): Task<QuerySnapshot> {
+        var query: Query = postCollection
+
+        genus?.let {
+            query = query.whereEqualTo("genus", it)
+        }
+
+        gender?.let {
+            query = query.whereEqualTo("gender", it)
+        }
+
+        age?.let {
+            query = query.whereEqualTo("age", it)
+        }
+
+        breed?.let {
+            query = query.whereEqualTo("breed", it)
+        }
+
+        color?.let {
+            query = query.whereEqualTo("color", it)
+        }
+
+        return query.limit(limit).get()
+    }
+
 }

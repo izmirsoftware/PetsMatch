@@ -32,4 +32,35 @@
         <item>Kangal dog</item>
         <item>Siberian husky</item>
     </string-array>
+
+
+    <string-array name="genus_array">
+        <item>Kedi</item>
+        <item>Köpek</item>
+    </string-array>
+
+    <string-array name="gender_array">
+        <item>Erkek</item>
+        <item>Dişi</item>
+    </string-array>
+
+    <string-array name="age_array">
+        <item>0-1</item>
+        <item>1-3</item>
+        <item>3-5</item>
+        <item>5+</item>
+    </string-array>
+
+    <string-array name="breed_array">
+        <item>Golden Retriever</item>
+        <item>Siyam Kedisi</item>
+        <!-- Diğer ırklar -->
+    </string-array>
+
+    <string-array name="color_array">
+        <item>Siyah</item>
+        <item>Beyaz</item>
+        <item>Kahverengi</item>
+        <!-- Diğer renkler -->
+    </string-array>
 </resources>

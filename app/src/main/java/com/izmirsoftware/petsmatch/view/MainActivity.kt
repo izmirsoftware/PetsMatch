@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
             binding.mainBottomNavigation.setOnItemReselectedListener {
                 when (it.itemId) {
                     R.id.navigation_home -> navControl.navigate(R.id.action_global_navigation_home)
+                    R.id.navigation_search -> navControl.navigate(R.id.action_global_navigation_search)
                     R.id.navigation_profile -> navControl.navigate(R.id.action_global_navigation_profile)
                 }
             }

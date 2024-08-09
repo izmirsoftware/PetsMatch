@@ -27,7 +27,6 @@
                 <ImageView
                     android:scaleType="centerCrop"
                     downloadImage="@{post.image}"
-                    tools:src="@drawable/entry_image"
                     android:id="@+id/ivPet"
                     android:layout_width="250dp"
                     android:layout_height="250dp"

@@ -1,5 +1,6 @@
 package com.izmirsoftware.petsmatch.model
 
+import com.izmirsoftware.petsmatch.util.PetType
 import java.io.Serializable
 
 data class Pet(
@@ -18,7 +19,8 @@ data class Pet(
     var vaccinations: Boolean? = null, // Hayvanın aşıları tam mı?
     var allergies: String? = null, // Hayvanın alerjileri
     var ownerId: String? = null, // Hayvanın sahibinin kimliği
-    var description: String? = null // Hayvan sahibinin yazdığı açıklama
+    var description: String? = null, // Hayvan sahibinin yazdığı açıklama
+    var type: PetType? = null // Hayvanın türü
     //TODO: ilanı veren kişi kaç yavru istiyor kısmı eklenebilir
     //TODO: evcil hayvanların doğum tarihlerini al
     //TODO: doğum tarihinden yaşı hesapla

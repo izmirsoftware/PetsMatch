@@ -12,6 +12,7 @@ import com.izmirsoftware.petsmatch.model.Pet
 import com.izmirsoftware.petsmatch.model.PetCardModel
 import com.izmirsoftware.petsmatch.model.PetPost
 import com.izmirsoftware.petsmatch.repo.FirebaseRepoInterFace
+import com.izmirsoftware.petsmatch.util.PetType
 import com.izmirsoftware.petsmatch.util.Resource
 import com.izmirsoftware.petsmatch.util.toPetModel
 import com.izmirsoftware.petsmatch.util.toPetPost
@@ -34,18 +35,24 @@ constructor(
     val firebaseMessage: LiveData<Resource<Boolean>>
         get() = _firebaseMessage
 
-    private var _petPostList = MutableLiveData<List<PetPost>>()
-    val petPostList: LiveData<List<PetPost>>
-        get() = _petPostList
+    private var _catPostList = MutableLiveData<List<PetPost>>()
+    val catPostList: LiveData<List<PetPost>>
+        get() = _catPostList
+
+    private var _dogPostList = MutableLiveData<List<PetPost>>()
+    val dogPostList: LiveData<List<PetPost>>
+        get() = _dogPostList
 
 
     init {
+        _firebaseMessage.value = Resource.loading(null)
         getAllUSer()
-        getAllPostsFromFirestore()
+        getDogsFromFirestore()
+        getCatsFromFirestore()
     }
 
-    private fun getAllPostsFromFirestore() = viewModelScope.launch {
-        firebaseRepo.getAllPostsFromFirestore(10)
+    private fun getDogsFromFirestore() = viewModelScope.launch {
+        firebaseRepo.getPetPostsByPetType(PetType.DOG,10)
             .addOnSuccessListener {
                 val postList = mutableListOf<PetPost>()
                 for (document in it.documents) {
@@ -54,7 +61,26 @@ constructor(
                         postList.add(post)
                     }
                 }
-                _petPostList.value = postList
+                _dogPostList.value = postList
+                _firebaseMessage.value = Resource.success(null)
+            }.addOnFailureListener {
+                liveDataResult.mutable.value = Resource.loading(false)
+                it.message?.let { message ->
+                    liveDataResult.mutable.value = Resource.error(message)
+                }
+            }
+    }
+    private fun getCatsFromFirestore() = viewModelScope.launch {
+        firebaseRepo.getPetPostsByPetType(PetType.CAT, 10)
+            .addOnSuccessListener {
+                val postList = mutableListOf<PetPost>()
+                for (document in it.documents) {
+                    // Belgeden her bir videoyu çek
+                    document.toPetPost()?.let { post ->
+                        postList.add(post)
+                    }
+                }
+                _catPostList.value = postList
                 _firebaseMessage.value = Resource.success(null)
             }.addOnFailureListener {
                 liveDataResult.mutable.value = Resource.loading(false)
@@ -65,7 +91,6 @@ constructor(
     }
     fun signInAnonymously() = viewModelScope.launch {
         liveDataResult.mutable.value = Resource.loading(true)
-
         auth.signInAnonymously()
             .addOnSuccessListener {
                 liveDataResult.mutable.value = Resource.loading(false)
@@ -118,6 +143,4 @@ constructor(
     fun logout() {
         auth.signOut()
     }
-
-
 }

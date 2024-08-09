@@ -28,7 +28,10 @@ class HomeFragment : Fragment() {
 
     private var firebaseUser = FirebaseAuth.getInstance().currentUser
 
-    private val adapter: AdapterPostCard by lazy {
+    private val catAdapter: AdapterPostCard by lazy {
+        AdapterPostCard()
+    }
+    private val dogAdapter: AdapterPostCard by lazy {
         AdapterPostCard()
     }
 
@@ -49,8 +52,8 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.rvPopularDogs.adapter = adapter
-        binding.rvPopularCats.adapter = adapter
+        binding.rvPopularDogs.adapter = dogAdapter
+        binding.rvPopularCats.adapter = catAdapter
 
         setOnClickItems()
 
@@ -81,9 +84,14 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
-            petPostList.observe(owner) {petPosts->
+            catPostList.observe(owner) {petPosts->
                 if (petPosts != null) {
-                    adapter.petPostList = petPosts
+                    catAdapter.petPostList = petPosts
+                }
+            }
+            dogPostList.observe(owner) {petPosts->
+                if (petPosts != null) {
+                    dogAdapter.petPostList = petPosts
                 }
             }
 

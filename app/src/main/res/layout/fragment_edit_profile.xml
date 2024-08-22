@@ -8,135 +8,141 @@
             type="com.izmirsoftware.petsmatch.model.UserModel" />
 
     </data>
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <ScrollView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:padding="16dp">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:elevation="4dp"
-                android:padding="16dp"
-                android:layout_marginBottom="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:id="@+id/ivUserProfilePhoto"
-                        downloadImage="@{user.profilePhoto}"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        android:scaleType="centerCrop"
-                        android:layout_marginEnd="16dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <EditText
-                            android:id="@+id/etUserName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@={user.username}"
-                            tools:text="Gaffar Yücel"
-                            android:hint="Username"
-                            android:textSize="24sp"
-                            android:textStyle="bold"
-                            android:inputType="textPersonName" />
-
-                        <EditText
-                            android:id="@+id/etEmail"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@={user.email}"
-                            tools:text="gaffaryucel@mail.com"
-                            android:hint="Email"
-                            android:inputType="textEmailAddress" />
-
-                        <EditText
-                            android:id="@+id/etPhone"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@={user.phone}"
-                            tools:text="+90 542 542 42 42"
-                            android:hint="Phone"
-                            android:inputType="phone" />
-                    </LinearLayout>
-                </LinearLayout>
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="24dp">
+                    android:elevation="4dp"
+                    android:padding="16dp"
+                    android:layout_marginBottom="16dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Hakkında"
-                        android:textSize="20sp" />
-
-                    <EditText
-                        android:id="@+id/etBio"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={user.bio}"
-                        tools:text="I have been breeding animals for over 10 years. Specializing in exotic breeds, I ensure the health and happiness of each animal."
-                        android:hint="Bio"
-                        android:layout_marginTop="8dp"
-                        android:inputType="textMultiLine"
-                        android:lines="4"
-                        android:minLines="4"
-                        android:gravity="top" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:id="@+id/ivUserProfilePhoto"
+                            downloadImage="@{user.profilePhoto}"
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:scaleType="centerCrop"
+                            android:layout_marginEnd="16dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <EditText
+                                android:id="@+id/etUserName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@={user.username}"
+                                tools:text="Gaffar Yücel"
+                                android:hint="Username"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:inputType="textPersonName" />
+
+                            <EditText
+                                android:id="@+id/etEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@={user.email}"
+                                tools:text="gaffaryucel@mail.com"
+                                android:hint="Email"
+                                android:inputType="textEmailAddress" />
+
+                            <EditText
+                                android:id="@+id/etPhone"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@={user.phone}"
+                                tools:text="+90 542 542 42 42"
+                                android:hint="Phone"
+                                android:inputType="phone" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="24dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hakkında"
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:id="@+id/etBio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@={user.bio}"
+                            tools:text="I have been breeding animals for over 10 years. Specializing in exotic breeds, I ensure the health and happiness of each animal."
+                            android:hint="Bio"
+                            android:layout_marginTop="8dp"
+                            android:inputType="textMultiLine"
+                            android:lines="4"
+                            android:minLines="4"
+                            android:gravity="top" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnSave"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Save Changes"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="16dp" />
+
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/btnSave"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Save Changes"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="16dp" />
+            </ScrollView>
 
-            </LinearLayout>
+            <ProgressBar
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:id="@+id/pbEditProfileInfo"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:text="Bir hata oluştu, tekrar deneyin"
+                android:textColor="@color/design_default_color_error"
+                android:id="@+id/tvErrorEditProfile"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-        </ScrollView>
+        </LinearLayout>
 
-        <ProgressBar
-            android:visibility="gone"
-            android:layout_gravity="center"
-            android:id="@+id/pbEditProfileInfo"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_gravity="center"
-            android:visibility="gone"
-            android:text="Bir hata oluştu, tekrar deneyin"
-            android:textColor="@color/design_default_color_error"
-            android:id="@+id/tvErrorEditProfile"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

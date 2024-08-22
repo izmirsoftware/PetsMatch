@@ -97,7 +97,7 @@ class CreatePostFragment : Fragment() {
     }
 
     private fun collectData(petPost: PetPost): PetPost {
-        pet?.id?.let { petModelId ->
+        pet?.let { myPetModel ->
             with(binding) {
                 petPost.apply {
                     if (id == null) {
@@ -110,7 +110,9 @@ class CreatePostFragment : Fragment() {
                         city = editTextCity.text.toString(),
                         district = editTextDistrict.text.toString()
                     )
-                    petId = petModelId
+                    petId = myPetModel.id
+                    image = myPetModel.profileImage
+                    age = myPetModel.age    
                 }
             }
         }

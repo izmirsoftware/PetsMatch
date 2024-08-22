@@ -12,7 +12,10 @@ import com.izmirsoftware.petsmatch.model.Pet
 import com.izmirsoftware.petsmatch.model.PetCardModel
 import com.izmirsoftware.petsmatch.model.PetPost
 import com.izmirsoftware.petsmatch.repo.FirebaseRepoInterFace
+import com.izmirsoftware.petsmatch.util.PetType
 import com.izmirsoftware.petsmatch.util.Resource
+import com.izmirsoftware.petsmatch.util.toPetModel
+import com.izmirsoftware.petsmatch.util.toPetPost
 import com.izmirsoftware.petsmatch.viewmodel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -26,12 +29,68 @@ constructor(
     private val firebaseRepo: FirebaseRepoInterFace,
     private val auth: FirebaseAuth
 ) : BaseViewModel() {
-    val liveDataPetCardModels: LiveData<List<PetCardModel>> = MutableLiveData()
     val liveDataFirebaseUser: LiveData<FirebaseUser> = MutableLiveData()
 
+    private var _firebaseMessage = MutableLiveData<Resource<Boolean>>()
+    val firebaseMessage: LiveData<Resource<Boolean>>
+        get() = _firebaseMessage
+
+    private var _catPostList = MutableLiveData<List<PetPost>>()
+    val catPostList: LiveData<List<PetPost>>
+        get() = _catPostList
+
+    private var _dogPostList = MutableLiveData<List<PetPost>>()
+    val dogPostList: LiveData<List<PetPost>>
+        get() = _dogPostList
+
+
+    init {
+        _firebaseMessage.value = Resource.loading(null)
+        getAllUSer()
+        getDogsFromFirestore()
+        getCatsFromFirestore()
+    }
+
+    private fun getDogsFromFirestore() = viewModelScope.launch {
+        firebaseRepo.getPetPostsByPetType(PetType.DOG,10)
+            .addOnSuccessListener {
+                val postList = mutableListOf<PetPost>()
+                for (document in it.documents) {
+                    // Belgeden her bir videoyu çek
+                    document.toPetPost()?.let { post ->
+                        postList.add(post)
+                    }
+                }
+                _dogPostList.value = postList
+                _firebaseMessage.value = Resource.success(null)
+            }.addOnFailureListener {
+                liveDataResult.mutable.value = Resource.loading(false)
+                it.message?.let { message ->
+                    liveDataResult.mutable.value = Resource.error(message)
+                }
+            }
+    }
+    private fun getCatsFromFirestore() = viewModelScope.launch {
+        firebaseRepo.getPetPostsByPetType(PetType.CAT, 10)
+            .addOnSuccessListener {
+                val postList = mutableListOf<PetPost>()
+                for (document in it.documents) {
+                    // Belgeden her bir videoyu çek
+                    document.toPetPost()?.let { post ->
+                        postList.add(post)
+                    }
+                }
+                _catPostList.value = postList
+                _firebaseMessage.value = Resource.success(null)
+            }.addOnFailureListener {
+                liveDataResult.mutable.value = Resource.loading(false)
+                it.message?.let { message ->
+                    liveDataResult.mutable.value = Resource.error(message)
+                }
+            }
+    }
     fun signInAnonymously() = viewModelScope.launch {
         liveDataResult.mutable.value = Resource.loading(true)
-
         auth.signInAnonymously()
             .addOnSuccessListener {
                 liveDataResult.mutable.value = Resource.loading(false)
@@ -43,10 +102,6 @@ constructor(
                 }
             }
     }
-    init {
-        getAllUSer()
-    }
-
     fun getAllUSer() = viewModelScope.launch {
         firebaseRepo.getUsersFromFirestore()
             .addOnSuccessListener {
@@ -55,19 +110,6 @@ constructor(
 
             }
     }
-
-    fun getAllPostsFromFirestore(petCardModel: PetCardModel) = viewModelScope.launch {
-        firebaseRepo.getAllPostsFromFirestore(10)
-            .addOnSuccessListener {
-
-            }.addOnFailureListener {
-                liveDataResult.mutable.value = Resource.loading(false)
-                it.message?.let { message ->
-                    liveDataResult.mutable.value = Resource.error(message)
-                }
-            }
-    }
-
     fun getPetByIdFromFirestore(petCardModel: PetCardModel) = viewModelScope.launch {
         petCardModel.petPost?.petId?.let { id ->
             firebaseRepo.getPetByIdFromFirestore(id)
@@ -100,72 +142,5 @@ constructor(
 
     fun logout() {
         auth.signOut()
-    }
-
-    fun createPetCardModels() {
-        val petPost = PetPost()
-        petPost.title = "Çok sevimli kedi"
-        petPost.description = "Kedimiz çok sakindir, saldırganlık yapmaz, tuvalet eğitimi var."
-        petPost.location = Location(
-            city = "İzmir",
-            district = "Torbalı"
-        )
-        val currentTime = System.currentTimeMillis()
-        petPost.date = Date(currentTime)
-
-        val pet = Pet()
-        pet.profileImage = "https://cdn1.ntv.com.tr/gorsel/xXM8GccvjkmZxggiDVHP5g.jpg"
-
-        val owner = Owner(
-            comments = listOf(
-                Comment(
-                    rating = 4.8
-                ),
-                Comment(
-                    rating = 4.0
-                ),
-                Comment(
-                    rating = 3.5
-                )
-            )
-        )
-
-        liveDataPetCardModels.mutable.value = listOf(
-            PetCardModel(
-                petPost = petPost,
-                pet = pet,
-                owner = owner
-            ),
-            PetCardModel(
-                petPost = petPost,
-                pet = pet,
-                owner = owner
-            ),
-            PetCardModel(
-                petPost = petPost,
-                pet = pet,
-                owner = owner
-            ),
-            PetCardModel(
-                petPost = petPost,
-                pet = pet,
-                owner = owner
-            ),
-            PetCardModel(
-                petPost = petPost,
-                pet = pet,
-                owner = owner
-            ),
-            PetCardModel(
-                petPost = petPost,
-                pet = pet,
-                owner = owner
-            ),
-            PetCardModel(
-                petPost = petPost,
-                pet = pet,
-                owner = owner
-            )
-        )
     }
 }

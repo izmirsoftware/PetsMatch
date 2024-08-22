@@ -90,7 +90,6 @@ class ProfileFragment : Fragment() {
             }
         })
         viewModel.petCardModel.observe(viewLifecycleOwner) {
-            adapter.petCardList = it.toList()
         }
     }
 

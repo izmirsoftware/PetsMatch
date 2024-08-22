@@ -1,37 +1,43 @@
-package com.izmirsoftware.petsmatch.view.home
+package com.izmirsoftware.petsmatch.view.search
 
 import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Intent
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import com.google.firebase.auth.FirebaseAuth
 import com.izmirsoftware.petsmatch.R
+import com.izmirsoftware.petsmatch.adapter.AdapterPetCard
 import com.izmirsoftware.petsmatch.adapter.AdapterPostCard
-import com.izmirsoftware.petsmatch.databinding.FragmentHomeBinding
+import com.izmirsoftware.petsmatch.databinding.FragmentProfileBinding
+import com.izmirsoftware.petsmatch.databinding.FragmentSearchBinding
 import com.izmirsoftware.petsmatch.util.Status
 import com.izmirsoftware.petsmatch.util.setupDialogs
 import com.izmirsoftware.petsmatch.view.LoginActivity
-import com.izmirsoftware.petsmatch.viewmodel.home.HomeViewModel
+import com.izmirsoftware.petsmatch.view.home.HomeFragmentDirections
+import com.izmirsoftware.petsmatch.viewmodel.profile.ProfileViewModel
+import com.izmirsoftware.petsmatch.viewmodel.search.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
-    private val viewModel: HomeViewModel by viewModels()
-    private var _binding: FragmentHomeBinding? = null
+class SearchFragment : Fragment() {
+    private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
-    private var firebaseUser = FirebaseAuth.getInstance().currentUser
+    val viewModel: SearchViewModel by viewModels()
+
+    private var progressDialog: ProgressDialog? = null
+
+    private val adapter = AdapterPetCard()
 
     private val catAdapter: AdapterPostCard by lazy {
-        AdapterPostCard()
-    }
-    private val dogAdapter: AdapterPostCard by lazy {
         AdapterPostCard()
     }
 
@@ -39,30 +45,21 @@ class HomeFragment : Fragment() {
         AlertDialog.Builder(requireContext()).create()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (firebaseUser == null) {
-            viewModel.signInAnonymously()
-        }
-    }
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        binding.rvPopularDogs.adapter = dogAdapter
-        binding.rvPopularCats.adapter = catAdapter
-
-        setOnClickItems()
-
-        return root
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.rvSearch.adapter = catAdapter
+        binding.ivFilter.setOnClickListener {
+            val action = SearchFragmentDirections.actionNavigationSearchToFilterFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
     }
 
     override fun onResume() {
@@ -84,39 +81,13 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
-            catPostList.observe(owner) {petPosts->
+            searchResult.observe(owner) {petPosts->
                 if (petPosts != null) {
                     catAdapter.petPostList = petPosts
                 }
             }
-            dogPostList.observe(owner) {petPosts->
-                if (petPosts != null) {
-                    dogAdapter.petPostList = petPosts
-                }
-            }
-
-            liveDataFirebaseUser.observe(owner) {
-                firebaseUser = it
-            }
         }
     }
-
-    private fun setOnClickItems() {
-        with(binding) {
-            fab.setOnClickListener {
-                firebaseUser?.let { user ->
-                    if (user.isAnonymous) {
-                        showLoginMessage()
-                    } else {
-                        gotoEntryForCreateFragment()
-                    }
-                } ?: run {
-                    showLoginMessage()
-                }
-            }
-        }
-    }
-
     private fun showLoginMessage() {
         val dialog = AlertDialog.Builder(requireContext()).create()
 
@@ -139,6 +110,16 @@ class HomeFragment : Fragment() {
         dialog.show()
     }
 
+    private fun setProgressBar(status: Boolean) {
+        with(binding) {
+            if (status) {
+                pbSearch.visibility = View.VISIBLE
+            } else {
+                pbSearch.visibility = View.GONE
+            }
+        }
+    }
+
     private fun gotoEntryForCreateFragment() {
         val direction =
             HomeFragmentDirections.actionNavigationHomeToEntryForCreateFragment()
@@ -151,15 +132,6 @@ class HomeFragment : Fragment() {
         startActivity(intent)
     }
 
-    private fun setProgressBar(status: Boolean) {
-        with(binding) {
-            if (status) {
-                progressBar.visibility = View.VISIBLE
-            } else {
-                progressBar.visibility = View.GONE
-            }
-        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

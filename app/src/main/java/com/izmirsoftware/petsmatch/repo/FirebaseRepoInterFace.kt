@@ -9,6 +9,7 @@ import com.google.firebase.storage.UploadTask
 import com.izmirsoftware.petsmatch.model.Pet
 import com.izmirsoftware.petsmatch.model.PetPost
 import com.izmirsoftware.petsmatch.model.UserModel
+import com.izmirsoftware.petsmatch.util.PetType
 
 interface FirebaseRepoInterFace {
     // Auth
@@ -38,6 +39,15 @@ interface FirebaseRepoInterFace {
     fun getAllPostsFromFirestore(): Task<QuerySnapshot>
     fun getAllPostsFromFirestore(limit: Long): Task<QuerySnapshot>
     fun getPostByIdFromFirestore(postId: String): Task<DocumentSnapshot>
+    fun getPetPostsByPetType(type: PetType,limit : Long): Task<QuerySnapshot>
+    fun getFilteredPosts(
+        genus: String?,
+        gender: String?,
+        age: String?,
+        breed: String?,
+        color: String?,
+        limit: Long
+    ): Task<QuerySnapshot>
 
     //Firebase Storage
     fun uploadUserProfilePhoto(

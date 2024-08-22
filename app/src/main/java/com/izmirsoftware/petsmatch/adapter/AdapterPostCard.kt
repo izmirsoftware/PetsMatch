@@ -6,17 +6,19 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.izmirsoftware.petsmatch.databinding.CardPostItemBinding
+import com.izmirsoftware.petsmatch.databinding.RowPetBinding
 import com.izmirsoftware.petsmatch.model.PetCardModel
+import com.izmirsoftware.petsmatch.model.PetPost
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class AdapterPostCard : RecyclerView.Adapter<AdapterPostCard.ViewHolder>() {
-    private val diffUtil = object : DiffUtil.ItemCallback<PetCardModel>() {
-        override fun areItemsTheSame(oldItem: PetCardModel, newItem: PetCardModel): Boolean {
-            return oldItem.petPost?.id == newItem.petPost?.id
+    private val diffUtil = object : DiffUtil.ItemCallback<PetPost>() {
+        override fun areItemsTheSame(oldItem: PetPost, newItem: PetPost): Boolean {
+            return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: PetCardModel, newItem: PetCardModel): Boolean {
+        override fun areContentsTheSame(oldItem: PetPost, newItem: PetPost): Boolean {
             return oldItem == newItem
         }
     }
@@ -26,14 +28,14 @@ class AdapterPostCard : RecyclerView.Adapter<AdapterPostCard.ViewHolder>() {
         diffUtil
     )
 
-    var petCardList: List<PetCardModel>
+    var petPostList: List<PetPost>
         get() = asyncListDiffer.currentList
         set(value) = asyncListDiffer.submitList(value)
 
-    inner class ViewHolder(val binding: CardPostItemBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: RowPetBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = CardPostItemBinding.inflate(
+        val binding = RowPetBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -42,26 +44,14 @@ class AdapterPostCard : RecyclerView.Adapter<AdapterPostCard.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return petCardList.size
+        return petPostList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val petCardModel = petCardList[position]
+        val petPost = petPostList[position]
 
         with(holder.binding) {
-            viewPetCardModel = petCardModel
-
-            petCardModel.petPost?.date?.let {
-                textDate.text = buildString {
-                    append("İlan tarihi\n")
-                    append(
-                        SimpleDateFormat(
-                            "dd/MM/yyyy",
-                            Locale.getDefault()
-                        ).format(it)
-                    )
-                }
-            }
+            post = petPost
         }
     }
 }

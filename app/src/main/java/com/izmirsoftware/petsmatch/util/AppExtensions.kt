@@ -7,6 +7,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.izmirsoftware.petsmatch.model.Pet
+import com.izmirsoftware.petsmatch.model.PetPost
 import com.izmirsoftware.petsmatch.model.UserModel
 
 //String öğelerin sonuna fonksiyon ile snackbar çıkarma özelliği sağlar
@@ -77,6 +78,17 @@ fun DocumentSnapshot.toPetModel(): Pet = try {
         )
     }
     Pet()
+}
+fun DocumentSnapshot.toPetPost(): PetPost? = try {
+    toObject(PetPost::class.java)
+} catch (e: Exception) {
+    e.message?.let {
+        Log.e(
+            "getPetPost",
+            it
+        )
+    }
+    PetPost()
 }
 /*
 fun QueryDocumentSnapshot.toVilla(): Villa = try {
